@@ -188,7 +188,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 1 · AGENDA ============ -->
 <section class="slide" id="s1">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">01</span><span class="seg">·17</span> <span>Agenda</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">01</span><span class="seg">·26</span> <span>Agenda</span><span class="bar"></span></div>
   <h1 class="title">Recorrido de la presentación</h1>
   <div class="cols" style="margin-top:14px">
     <div class="col">
@@ -216,7 +216,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 2 · PROBLEMA ============ -->
 <section class="slide" id="s2">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">02</span><span class="seg">·17</span> <span>Problema y contexto</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">02</span><span class="seg">·26</span> <span>Problema y contexto</span><span class="bar"></span></div>
   <h1 class="title">Compartir información clínica sigue siendo difícil</h1>
   <h2 class="lead">Fragmentación · portabilidad no verificable · datos poco comprensibles</h2>
   <div class="cardgrid" style="grid-template-columns:repeat(3,1fr)">
@@ -242,7 +242,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 3 · OBJETIVO ============ -->
 <section class="slide" id="s3">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">03</span><span class="seg">·17</span> <span>Objetivo y alcance</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">03</span><span class="seg">·26</span> <span>Objetivo y alcance</span><span class="bar"></span></div>
   <h1 class="title">Emitir, publicar, verificar y entender</h1>
   <div class="cols">
     <div class="col">
@@ -269,7 +269,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 4 · ESTÁNDARES ============ -->
 <section class="slide" id="s4">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">04</span><span class="seg">·17</span> <span>Fundamentos</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">04</span><span class="seg">·26</span> <span>Fundamentos</span><span class="bar"></span></div>
   <h1 class="title">Cuatro piezas que se complementan</h1>
   <div class="cardgrid" style="grid-template-columns:repeat(4,1fr);margin-top:10px">
     <div class="card"><h3 style="color:var(--teal)">FHIR R4</h3><p>Recursos clínicos (<span class="k">Patient</span>, <span class="k">Immunization</span>, <span class="k">Observation</span>…) sobre REST/JSON. Finalized 2018, es hoy el estándar dominante: <b>71% de países lo usan activamente</b> y más del 90% de hospitales en EE.UU. lo adoptaron.</p></div>
@@ -282,7 +282,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 5 · METODOLOGÍA ============ -->
 <section class="slide" id="s5">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">05</span><span class="seg">·17</span> <span>Metodología</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">05</span><span class="seg">·26</span> <span>Metodología</span><span class="bar"></span></div>
   <h1 class="title">Ágil híbrida, entregas incrementales</h1>
   <div class="cols">
     <div class="col">
@@ -310,7 +310,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 6 · ARQUITECTURA ============ -->
 <section class="slide" id="s6">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">06</span><span class="seg">·17</span> <span>Arquitectura general</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">06</span><span class="seg">·26</span> <span>Arquitectura general</span><span class="bar"></span></div>
   <h1 class="title">Visión del ecosistema</h1>
   <div class="diawrap" id="dia-arch"></div>
   <div class="cap">Figura · emisión, distribución cifrada, verificación independiente y capa de IA opcional</div>
@@ -318,75 +318,355 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 7 · ISSUER ============ -->
 <section class="slide" id="s7">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">07</span><span class="seg">·17</span> <span>Nēxo Issuer</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">07</span><span class="seg">·26</span> <span>Nēxo Issuer</span><span class="bar"></span></div>
   <h1 class="title">Del recurso FHIR al SMART Health Link</h1>
-  <div class="diawrap" id="dia-issuer" style="flex:none;height:340px"></div>
-  <div class="chips" style="margin-top:12px">
-    <span class="chip"><b>Node 20</b> · Express 5 · TS</span>
-    <span class="chip">arquitectura en capas · DI</span>
-    <span class="chip"><b>correlationId</b> · AsyncLocalStorage · Pino</span>
-    <span class="chip"><b>p-limit</b> · concurrencia controlada</span>
-    <span class="chip">una SHC por tipo de recurso</span>
-    <span class="chip"><b>JWKS</b> en /.well-known · Swagger /api-docs</span>
+  <div class="diawrap" id="dia-issuer" style="flex:none;height:270px"></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px">
+    <div class="card">
+      <h3><span class="dot" style="background:var(--amber)"></span>Firma · para probar el origen</h3>
+      <p>Cualquiera podría fabricar un QR con datos falsos. La firma <span class="k">ES256</span> hace que sea <b>imposible sin la clave privada</b> y <b>verificable por cualquiera</b> con la clave pública. El issuer publica esa clave en <span class="k">/.well-known/jwks.json</span>: el verifier valida de forma autónoma, sin depender del issuer.</p>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--teal)"></span>Cifrado · para cegar a S3</h3>
+      <p>Si el issuer subiera los JWS directamente a S3, una brecha en S3 expondría todos los datos clínicos. La solución: cifrar con una clave <b>que el servidor nunca conoce</b>. La clave <span class="k">AES-256</span> es aleatoria por sesión, nunca se persiste, y vive solo en el QR del paciente.</p>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--cyan)"></span>Manifiesto · control de acceso</h3>
+      <p>El manifiesto <b>no existe hasta que se pide</b>: el issuer valida la sesión en DB, obtiene los <span class="k">s3Keys</span> y genera <b>URLs prefirmadas de S3</b> con vida <span class="k">≤ 1h</span>. El verifier descarga los JWEs directo de S3 — el issuer nunca sirve los datos, solo habilita el acceso.</p>
+    </div>
   </div>
 </section>
 
-<!-- ============ 8 · ISSUER SEGURIDAD ============ -->
-<section class="slide" id="s8">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">08</span><span class="seg">·17</span> <span>Issuer · seguridad</span><span class="bar"></span></div>
-  <h1 class="title">La criptografía es arquitectura, no solo algoritmo</h1>
+<!-- ============ 8-12 · ISSUER CRYPTO ============ -->
+<section class="slide" id="s7b">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">08</span><span class="seg">·26</span> <span>Issuer · firma ES256</span><span class="bar"></span></div>
+  <h1 class="title">El problema: cualquiera puede fabricar un QR con datos falsos</h1>
+  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="height:100%">
+        <h3 style="color:var(--danger)">Sin firma — el QR es solo texto</h3>
+        <p style="margin-top:10px">Cualquier persona puede crear un QR con datos médicos inventados y presentarlo como si fuera de un hospital real. No hay forma automática de distinguirlo.</p>
+        <div style="margin-top:14px;font-family:var(--mono);font-size:13px;background:#fdf2f2;padding:12px 14px;border-radius:8px;color:#8a3030;line-height:1.7">
+          { "patient": "Juan Perez",<br>&nbsp;&nbsp;"vaccine": "COVID-19",<br>&nbsp;&nbsp;"date": "2024-01-15" }<br>
+          <span style="font-size:11px;color:#b05050">cualquiera puede escribir esto</span>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%;background:#f0f7f4">
+        <h3 style="color:var(--teal)">Con firma ES256 &mdash; imposible falsificar</h3>
+        <p style="margin-top:10px">La firma usa la <b>clave privada</b> de la institucion. Verificarla solo requiere la <b>clave publica</b>, publicada en <span class="k">/.well-known/jwks.json</span>. Sin la clave privada: <b>matematicamente imposible de reproducir</b>.</p>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:12px">
+          <div style="flex:1;font-family:var(--mono);font-size:12px;background:#0d1f2d;padding:12px;border-radius:8px;color:var(--teal);line-height:1.7;text-align:center">
+            Clave privada<br><span style="color:#8fb0b8;font-size:10px">AWS Parameter Store<br>SecureString + KMS</span>
+          </div>
+          <div style="font-size:22px;color:var(--muted)">&#8594;</div>
+          <div style="flex:1;font-family:var(--mono);font-size:12px;background:#f6f4eb;padding:12px;border-radius:8px;color:var(--amber);line-height:1.7;text-align:center">
+            Clave publica<br><span style="color:#8a7030;font-size:10px">/.well-known/<br>jwks.json</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9 · JWS ESTRUCTURA ============ -->
+<section class="slide" id="s7c">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">09</span><span class="seg">&#xB7;26</span> <span>Issuer &middot; JWS &middot; estructura</span><span class="bar"></span></div>
+  <h1 class="title">JWS: tres partes en Base64URL separadas por punto</h1>
+  <div style="margin-top:18px;font-family:var(--mono);font-size:14px;background:#f6f4eb;padding:18px 22px;border-radius:12px;line-height:1.5;word-break:break-all">
+    <span style="color:var(--amber);font-weight:600">eyJhbGciOiJFUzI1NiIsInppcCI6IkRFRiIsImtpZCI6Im5leG8tMSJ9</span><span style="color:var(--muted);font-size:20px">.</span><span style="color:var(--teal);font-weight:600">eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdfX0</span><span style="color:var(--muted);font-size:20px">.</span><span style="color:var(--ink2);font-weight:600">MEUCIQDx8qYk6H2NmPz3aW9vKlTgA9kL</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3 style="color:var(--amber)">Header</h3>
+      <div style="font-family:var(--mono);font-size:13px;margin-top:10px;background:#fdf8ed;padding:10px 12px;border-radius:6px;line-height:2">
+        {<br>&nbsp;&nbsp;"alg": "ES256",<br>&nbsp;&nbsp;"zip": "DEF",<br>&nbsp;&nbsp;"kid": "nexo-1"<br>}
+      </div>
+      <p style="margin-top:8px;font-size:13px"><span class="k">zip:DEF</span> &mdash; payload comprimido con DEFLATE</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <h3 style="color:var(--teal)">Payload</h3>
+      <div style="font-family:var(--mono);font-size:13px;margin-top:10px;background:#eef6f5;padding:10px 12px;border-radius:6px;line-height:2">
+        bundle FHIR<br>&#x2193; minimizar JSON<br>&#x2193; DEFLATE compress<br>&#x2193; Base64URL encode
+      </div>
+      <p style="margin-top:8px;font-size:13px">Compresion necesaria: el bundle crudo no cabe en un QR</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--ink2)">
+      <h3 style="color:var(--ink2)">Firma</h3>
+      <div style="font-family:var(--mono);font-size:13px;margin-top:10px;background:#f2f2f8;padding:10px 12px;border-radius:6px;line-height:2">
+        64 bytes<br>= r &#x2016; s<br>(dos coords<br>del punto P-256)
+      </div>
+      <p style="margin-top:8px;font-size:13px">Generada con clave privada. Verificable con la publica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 · POR QUE CIFRAR ============ -->
+<section class="slide" id="s7d">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">10</span><span class="seg">&#xB7;26</span> <span>Issuer &middot; cifrado AES-256-GCM</span><span class="bar"></span></div>
+  <h1 class="title">El problema: S3 no deberia ver el contenido clinico</h1>
+  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="height:100%">
+        <h3 style="color:var(--danger)">Sin cifrado &mdash; S3 tiene acceso a todo</h3>
+        <p style="margin-top:10px">Si el issuer subiera los JWS directamente a S3, una brecha expone todos los datos clinicos de todos los pacientes.</p>
+        <div style="margin-top:14px;font-family:var(--mono);font-size:12px;background:#fdf2f2;padding:12px 14px;border-radius:8px;color:#8a3030;line-height:1.8">
+          S3 bucket/<br>&nbsp;&nbsp;abc123.json &#x2192; JWS legible<br>&nbsp;&nbsp;def456.json &#x2192; JWS legible<br>
+          <span style="font-size:11px;color:#b05050">datos clinicos en texto plano</span>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%;background:#f0f7f4">
+        <h3 style="color:var(--teal)">Con cifrado AES-256-GCM &mdash; S3 es ciego</h3>
+        <p style="margin-top:10px">La clave AES de 32 bytes se genera <b>aleatoriamente por sesion</b>, nunca se persiste, y viaja solo en el QR del paciente.</p>
+        <div style="margin-top:14px;font-family:var(--mono);font-size:12px;background:#0d1f2d;padding:12px 14px;border-radius:8px;color:#8fb0b8;line-height:1.8">
+          S3 bucket/<br>&nbsp;&nbsp;abc123.json &#x2192; <span style="color:var(--teal)">bytes cifrados</span><br>&nbsp;&nbsp;def456.json &#x2192; <span style="color:var(--teal)">bytes cifrados</span><br>
+          <span style="font-size:11px;color:var(--cyan)">la clave vive solo en el QR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 · JWE ESTRUCTURA ============ -->
+<section class="slide" id="s7e">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">11</span><span class="seg">&#xB7;26</span> <span>Issuer &middot; JWE &middot; estructura</span><span class="bar"></span></div>
+  <h1 class="title">JWE: cinco partes en Base64URL separadas por punto</h1>
+  <div style="margin-top:16px;font-family:var(--mono);font-size:13px;background:#eef4f4;padding:16px 20px;border-radius:12px;line-height:1.5;word-break:break-all">
+    <span style="color:var(--muted);font-weight:600">eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0</span><span style="color:var(--muted);font-size:18px"> . </span><span style="color:var(--muted)">(vacio)</span><span style="color:var(--muted);font-size:18px"> . </span><span style="color:var(--teal);font-weight:600">IV-12-bytes</span><span style="color:var(--muted);font-size:18px"> . </span><span style="color:var(--ink2);font-weight:600">ciphertext</span><span style="color:var(--muted);font-size:18px"> . </span><span style="color:var(--amber);font-weight:600">auth-tag-128b</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-top:14px">
+    <div class="card" style="border-top:3px solid var(--muted)">
+      <h3 style="color:var(--muted);font-size:13px">Header</h3>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:8px;background:#f5f5f5;padding:8px 10px;border-radius:6px;line-height:2">
+        alg: "dir"<br>enc: "A256GCM"
+      </div>
+      <p style="margin-top:7px;font-size:12px"><span class="k">dir</span> = clave AES directo del QR</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--muted)">
+      <h3 style="color:var(--muted);font-size:13px">Clave cifrada</h3>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:8px;background:#f5f5f5;padding:8px 10px;border-radius:6px;line-height:2">
+        (vacio)
+      </div>
+      <p style="margin-top:7px;font-size:12px">En modo <span class="k">dir</span> no hay intercambio de clave</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <h3 style="color:var(--teal);font-size:13px">IV &middot; 12 bytes</h3>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:8px;background:#eef6f5;padding:8px 10px;border-radius:6px;line-height:2;color:var(--teal)">
+        aleatorio<br>por cifrado
+      </div>
+      <p style="margin-top:7px;font-size:12px">Mismo bundle = ciphertext distinto cada vez</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--ink2)">
+      <h3 style="color:var(--ink2);font-size:13px">Ciphertext</h3>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:8px;background:#f2f2f8;padding:8px 10px;border-radius:6px;line-height:2">
+        JWS cifrado<br>con AES-GCM
+      </div>
+      <p style="margin-top:7px;font-size:12px">Ilegible sin la clave del QR</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3 style="color:var(--amber);font-size:13px">Auth tag &middot; 128b</h3>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:8px;background:#fdf8ed;padding:8px 10px;border-radius:6px;line-height:2;color:var(--amber)">
+        integridad<br>garantizada
+      </div>
+      <p style="margin-top:7px;font-size:12px">Un byte alterado = descifrado falla</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 · EL QR ============ -->
+<section class="slide" id="s7f">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">12</span><span class="seg">&#xB7;26</span> <span>Issuer &middot; el QR resultado</span><span class="bar"></span></div>
+  <h1 class="title">El QR contiene la URL y la clave AES &mdash; todo en Base64URL</h1>
+  <div style="margin-top:24px;background:#0d1f2d;border-radius:14px;padding:22px 26px">
+    <div style="font-family:var(--mono);font-size:11px;color:#8fb0b8;margin-bottom:10px;letter-spacing:.05em">EL QR QUE ESCANEA EL PACIENTE</div>
+    <div style="font-family:var(--mono);font-size:15px;line-height:1.5;word-break:break-all">
+      <span style="color:var(--cyan)">shlink:/eyJ1cmwiOiJodHRwczovL2lzc3Vlci5uZXhvLmFyL2FwaS9zaGwvYWJjMTIzIiwia2V5IjoiWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFgiLCJmbGFnIjoiUCJ9</span>
+    </div>
+  </div>
+  <div style="margin-top:18px;font-size:24px;color:var(--muted);font-family:var(--mono);text-align:center">&#x2193; Base64URL decode</div>
+  <div style="margin-top:14px;background:#f6f4eb;border-radius:14px;padding:20px 26px;font-family:var(--mono);font-size:16px;line-height:2.2">
+    {<br>
+    &nbsp;&nbsp;<span style="color:var(--amber)">"url"</span>: <span style="color:var(--teal)">"https://issuer.nexo.ar/api/shl/abc123"</span>,<br>
+    &nbsp;&nbsp;<span style="color:var(--amber)">"key"</span>: <span style="color:var(--ink2)">"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"</span>, <span style="font-size:12px;color:var(--muted)">32 bytes AES-256</span><br>
+    &nbsp;&nbsp;<span style="color:var(--amber)">"flag"</span>: <span style="color:var(--teal)">"P"</span> <span style="font-size:12px;color:var(--muted)">requiere passcode</span><br>
+    }
+  </div>
+</section>
+
+<!-- ============ 9 · ISSUER SEGURIDAD ============ -->
+<section class="slide" id="s8b">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">13</span><span class="seg">·26</span> <span>Issuer · seguridad</span><span class="bar"></span></div>
+  <h1 class="title">El control de acceso es tan crítico como la criptografía</h1>
   <div class="cardgrid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="card"><h3><span class="dot" style="background:var(--amber)"></span>Firma · ES256</h3>
-      <p>Bundle minimizado, comprimido <span class="k">DEFLATE</span> y firmado <span class="k">JWS/ES256</span> con clave privada cargada desde <b>AWS Parameter Store</b> (SecureString + KMS).</p></div>
-    <div class="card"><h3><span class="dot" style="background:var(--teal)"></span>Cifrado · JWE</h3>
-      <p>JWE Compact Serialization: <span class="k">alg: dir</span> (cifrado directo, sin intercambio de clave) + <span class="k">enc: A256GCM</span>. IV de 12 bytes, auth tag de 128 bits. Clave de 32 bytes por sesión que <b>nunca se persiste</b>; viaja solo en el QR. S3 actúa como <b>repositorio ciego</b>.</p></div>
-    <div class="card"><h3><span class="dot" style="background:var(--cyan)"></span>Manifiesto · passcode</h3>
-      <p>Validación atómica con <span class="k">SELECT FOR UPDATE</span>. Passcode de 6 dígitos, hash <span class="k">bcrypt</span> con 12 salt rounds, 5 intentos por defecto. El <span class="k">401</span> expone <span class="k">remainingAttempts</span>; bloqueo con <span class="k">404</span> indistinguible de SHL inexistente.</p></div>
-    <div class="card"><h3><span class="dot" style="background:var(--green)"></span>Resiliencia · red</h3>
-      <p>Rate limiting. <b>Circuit breaker</b> hacia HAPI FHIR: threshold 50%, reset 30 s, volumen mínimo 3 requests. Nginx + TLS (Let's Encrypt), VPC privada. <b>Multiportal</b>: <span class="k">x-api-key</span> routea a distintos servidores FHIR.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--cyan)"></span>Passcode · generación y almacenamiento</h3>
+      <p>6 dígitos generados con <span class="k">crypto.randomInt(100000, 1000000)</span> — no <span class="k">Math.random()</span> (no criptográfico). El número en texto plano <b>nunca se guarda</b>: se hashea con <span class="k">bcrypt</span> de 12 salt rounds. Solo el hash entra a PostgreSQL. Comparación siempre con <span class="k">bcrypt.compare()</span> para resistir timing attacks.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--amber)"></span>Anti-brute-force · 401 y 404</h3>
+      <p>La validación del passcode usa <span class="k">SELECT FOR UPDATE</span>: atómica, sin race condition si dos requests llegan simultáneamente. Passcode incorrecto → <span class="k">401</span> con <span class="k">remainingAttempts</span>. Al agotar los 5 intentos, la sesión se desactiva y responde <span class="k">404</span> — idéntico al de un SHL expirado o inexistente. <b>Sin side-channel</b>: no se puede distinguir "bloqueado" de "no existe".</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--green)"></span>Resiliencia · circuit breaker</h3>
+      <p><b>Circuit breaker</b> hacia HAPI FHIR: se abre si el 50% de los requests falla en una ventana de ≥ 3. Resetea automáticamente a los 30 s. Protege contra cascada de errores si el servidor FHIR está caído. Rate limiting por IP.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--violet)"></span>Infraestructura · multiportal</h3>
+      <p>Nginx + TLS (Let's Encrypt). VPC privada: servicios internos sin exposición directa. <b>Multiportal</b>: el header <span class="k">x-api-key</span> routea al FHIR correcto según la institución — sin instancias separadas por organización. Logging estructurado con <span class="k">correlationId</span> propagado end-to-end.</p></div>
   </div>
 </section>
 
-<!-- ============ 9 · VERIFIER FLUJO ============ -->
+<!-- ============ 10 · VERIFIER FLUJO ============ -->
 <section class="slide" id="s9">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">09</span><span class="seg">·17</span> <span>Nēxo Verifier</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">14</span><span class="seg">·26</span> <span>Nēxo Verifier</span><span class="bar"></span></div>
   <h1 class="title">Del QR a los datos clínicos, en el dispositivo</h1>
-  <div class="diawrap" id="dia-verifier" style="flex:none;height:330px"></div>
-  <div class="chips" style="margin-top:12px">
-    <span class="chip"><b>React Native</b> · Expo SDK 54 · TS</span>
-    <span class="chip"><b>shlStore</b> · clave nunca en nav params</span>
-    <span class="chip">consumo único en memoria · sin historial local</span>
-    <span class="chip">38.293 LOINC ES-AR · 289 CVX en caché</span>
-    <span class="chip">flags <b>U</b> (directo) · <b>P</b> (passcode) · manifiesto</span>
+  <div class="diawrap" id="dia-verifier" style="flex:none;height:260px"></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px">
+    <div class="card">
+      <h3><span class="dot" style="background:var(--cyan)"></span>La clave del QR → shlStore</h3>
+      <p>El payload <span class="k">shlink:/eyJ...</span> se decodifica en Base64URL → JSON: <span class="k">{ url, key, flag }</span>. La clave AES <b>no puede viajar como nav param</b>: Expo Router los serializa en el historial y pueden quedar en crash reporters. Va a <b>shlStore</b>: variable en memoria con patrón consume-once. <span class="k">consumePendingShl()</span> la lee y la borra en un solo paso.</p>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--teal)"></span>El manifiesto no existe hasta que se pide</h3>
+      <p>POST → el issuer valida la sesión → genera URLs prefirmadas de S3 (vida <span class="k">≤ 1h</span>) → responde:</p>
+      <div style="font-family:var(--mono);font-size:10.5px;background:#0d1f2d;padding:8px 10px;border-radius:6px;margin-top:7px;line-height:1.8;color:#c7d8de">
+        <span style="color:var(--amber)">{</span> <span style="color:var(--teal)">"files"</span>: [<span style="color:var(--amber)">{</span> <span style="color:var(--teal)">"contentType"</span>: <span style="color:#c7d8de">"application/smart-health-card"</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">"location"</span>: <span style="color:#90d4b4">"https://s3.amazonaws.com/…?X-Amz-Signature=…"</span> <span style="color:var(--amber)">}</span>] <span style="color:var(--amber)">}</span>
+      </div>
+      <p style="margin-top:7px;font-size:13px">Descarga cada JWE de S3 → descifra → <span class="k">{ verifiableCredential: [JWS, ...] }</span>. Cada JWS es una SHC.</p>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--amber)"></span>Descifrar ≠ confiar en el origen</h3>
+      <p>El descifrado AES-GCM exitoso garantiza integridad — pero <b>no prueba quién lo creó</b>. Cualquiera podría fabricar un JWE con datos falsos y cifrarlo con una clave AES inventada. La firma ES256 dentro del JWS es la que responde esa pregunta. Son dos operaciones <b>independientes</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 · VERIFIER PIPELINE CRIPTOGRÁFICO ============ -->
+<section class="slide" id="s9b">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">15</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; JWE decrypt</span><span class="bar"></span></div>
+  <h1 class="title">Paso 1: descifrar &mdash; recuperar el JWS del bundle</h1>
+  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="height:100%">
+        <h3>El descifrado AES-256-GCM</h3>
+        <p style="margin-top:8px">La clave del QR + el IV de 12 bytes descifran el ciphertext. El <b>auth tag de 128 bits</b> verifica que nada fue alterado: se calcula sobre clave + IV + ciphertext + header. Si alguien modifico un solo byte en S3, en transito, donde sea, <span class="k">decipher.finish()</span> devuelve <span class="k">false</span>.</p>
+        <div style="margin-top:12px;font-family:var(--mono);font-size:12px;background:#0d1f2d;padding:12px 14px;border-radius:8px;color:#8fb0b8;line-height:1.9">
+          clave del QR (32B)<br>+ IV del JWE (12B)<br>+ ciphertext<br>&#x2193;<br><span style="color:var(--teal)">JWS descifrado</span> + auth tag verify<br>
+          <span style="color:var(--cyan);font-size:11px">clearKey() se llama siempre, incluso si falla</span>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%;background:#f0f7f4">
+        <h3>&#191;Por que el IV de 12 bytes aleatorios?</h3>
+        <p style="margin-top:8px">Sin IV distinto por mensaje, cifrar el mismo bundle dos veces producir&#237;a el mismo ciphertext. Un observador podr&#237;a detectar que el contenido se repite. Con IV aleatorio, el mismo plaintext produce output completamente distinto cada vez.</p>
+        <div style="margin-top:12px;font-family:var(--mono);font-size:13px;background:#eef6f5;padding:12px 14px;border-radius:8px;color:var(--teal);line-height:1.9">
+          bundle A + IV<sub>1</sub> &#x2192; <span style="color:var(--ink2)">ciphertext<sub>1</sub></span><br>
+          bundle A + IV<sub>2</sub> &#x2192; <span style="color:var(--ink2)">ciphertext<sub>2</sub></span><br>
+          <span style="font-size:11px;color:var(--muted)">mismo contenido, outputs distintos e indistinguibles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px;background:#0B1B2B;border:none;padding:11px 16px">
+    <p style="color:#c7d8de;font-size:14px">El descifrado exitoso garantiza <b>acceso e integridad</b> del contenido &mdash; pero <b style="color:var(--amber)">no prueba quien lo creo</b>. Cualquiera podria cifrar datos falsos con AES. Eso lo responde el siguiente paso: la firma ES256.</p>
+  </div>
+</section>
+
+<!-- ============ 16 · VERIFIER JWS VERIFY ============ -->
+<section class="slide" id="s9c">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">16</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; ES256 verify</span><span class="bar"></span></div>
+  <h1 class="title">Paso 2: verificar la firma &mdash; confirmar quien lo firmo</h1>
+  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="height:100%">
+        <h3>La verificacion ES256 paso a paso</h3>
+        <div style="font-family:var(--mono);font-size:12px;margin-top:10px;background:#f6f4eb;padding:12px 14px;border-radius:8px;color:var(--ink);line-height:2">
+          JWS header &#x2192; alg:ES256, zip:DEF, kid<br>
+          JWS payload &#x2192; Base64URL decode &#x2192; bytes &#x2192; DEFLATE decompress &#x2192; JSON<br>
+          JSON.iss &#x2192; descargar <span style="color:var(--teal)">{iss}/.well-known/jwks.json</span><br>
+          jwks[kid] &#x2192; reconstruir punto EC P-256<br>
+          <span style="color:var(--muted);font-size:11px">0x04 &#x2016; x &#x2016; y = 65 bytes, validado sobre la curva</span><br>
+          SHA-256("header.payload") &#x2192; 32 bytes<br>
+          p256.verify(sig 64B, hash 32B, pubkey 65B)<br>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%;background:#f0f7f4">
+        <h3>&#191;Por que SHA-256 antes de verificar?</h3>
+        <p style="margin-top:8px">ECDSA no opera sobre datos de longitud variable: necesita exactamente 32 bytes. SHA-256 convierte el bundle, de cualquier tamano, en 32 bytes que lo representan de forma univoca.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;background:#eef6f5;padding:10px 12px;border-radius:8px;color:var(--teal);line-height:1.9">
+          bundle (N bytes)<br>&#x2193; SHA-256<br><span style="color:var(--ink2)">32 bytes fijos</span><br>&#x2193; ECDSA P-256<br><span style="color:var(--teal)">firma valida / invalida</span>
+        </div>
+        <p style="margin-top:8px;font-size:13px">Un solo bit cambiado en el bundle cambia aprox. la mitad de los bits del hash.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 17 · DOS TRY/CATCH + ESTADOS ============ -->
+<section class="slide" id="s9d">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">17</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; independencia y estados</span><span class="bar"></span></div>
+  <h1 class="title">Descifrar y verificar son operaciones independientes</h1>
+  <div class="cols" style="gap:28px;margin-top:16px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="background:#0B1B2B;border:none;height:100%">
+        <h3 style="color:#fff">Dos try/catch separados</h3>
+        <p style="color:#c7d8de;margin-top:8px">Si la extraccion del bundle FHIR falla, el error del descifrado no contamina la verificacion de firma, y viceversa. Los datos se muestran aunque la firma falle &mdash; el criterio clinico es del profesional.</p>
+        <div style="margin-top:12px;font-family:var(--mono);font-size:12px;color:#8fb0b8;line-height:2">
+          try { descifrar + extraer FHIR }<br>
+          catch (e) { estado = 'error' }<br><br>
+          try { verificar firma ES256 }<br>
+          catch (e) {<br>
+          &nbsp;&nbsp;if (isJwksNetworkError) &#x2192; <span style="color:var(--amber)">success_unverified</span><br>
+          &nbsp;&nbsp;else &#x2192; <span style="color:var(--danger)">success_signature_invalid</span><br>
+          }
+        </div>
+        <p style="margin-top:10px;color:var(--cyan);font-size:13px">"No pude verificar" &#x2260; "verifique y es falso"</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%">
+        <h3>Los cuatro estados de resultado</h3>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#e8f5ef;border-radius:6px">
+            <span class="pill ok" style="white-space:nowrap">success</span>
+            <span>descifrado OK &middot; firma ES256 valida contra el JWKS</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef9ec;border-radius:6px">
+            <span class="pill wa" style="white-space:nowrap;font-size:10px">success_unverified</span>
+            <span>descifrado OK &middot; no se pudo descargar el JWKS (sin red)</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef2f2;border-radius:6px">
+            <span class="pill da" style="white-space:nowrap;font-size:10px">sig_invalid</span>
+            <span>descifrado OK &middot; p256.verify() devolvio false. No es temporal.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef2f2;border-radius:6px">
+            <span class="pill da" style="white-space:nowrap">error</span>
+            <span>auth tag fallo &middot; 404 (exp/bloq/inexist) &middot; QR invalido &middot; sin red</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ============ 10 · DOBLE CAPA + ESTADOS ============ -->
 <section class="slide" id="s10">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">10</span><span class="seg">·17</span> <span>Verifier · confianza</span><span class="bar"></span></div>
-  <h1 class="title">Dos capas que no deben confundirse</h1>
-  <div class="cols">
-    <div class="col narrow">
-      <div class="card" style="margin-bottom:12px"><h3><span class="dot" style="background:var(--teal)"></span>1 · Descifrar</h3>
-        <p><span class="k">AES-256-GCM</span> da acceso al contenido y verifica integridad mediante el <i>authentication tag</i>.</p></div>
-      <div class="card"><h3><span class="dot" style="background:var(--amber)"></span>2 · Verificar firma</h3>
-        <p><span class="k">ES256</span> contra el <b>JWKS</b> del emisor (<span class="k">iss</span> + <span class="k">kid</span>). Descifrar ≠ confiar.</p></div>
-    </div>
-    <div class="col">
-      <table class="t">
-        <tr><th>Estado</th><th>Significado</th></tr>
-        <tr><td><span class="pill ok">success</span></td><td>Descifrado correcto y firma válida contra el JWKS del emisor.</td></tr>
-        <tr><td><span class="pill wa">success_unverified</span></td><td>Se descifró, pero no se pudo acceder al JWKS (conectividad). Se muestra con advertencia.</td></tr>
-        <tr><td><span class="pill da">success_signature_invalid</span></td><td>Se descifró pero la firma no coincide. Severidad máxima: no es un fallo temporal.</td></tr>
-        <tr><td><span class="pill da">error</span></td><td>QR inválido, enlace no disponible, passcode agotado o descifrado fallido.</td></tr>
-      </table>
-    </div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">18</span><span class="seg">·26</span> <span>Verifier · confianza</span><span class="bar"></span></div>
+  <h1 class="title">Cuatro estados, cada uno con un significado clínico distinto</h1>
+  <table class="t" style="margin-top:14px">
+    <tr><th style="width:26%">Estado</th><th style="width:32%">Qué pasó</th><th>Implicación clínica</th></tr>
+    <tr><td><span class="pill ok">success</span></td><td>Descifrado OK · firma ES256 válida contra el JWKS del emisor</td><td>El contenido es auténtico e íntegro. La institución firmante lo avala.</td></tr>
+    <tr><td><span class="pill wa">success_unverified</span></td><td>Descifrado OK · no se pudo descargar el JWKS (sin red)</td><td>"No pude verificar" — no sé si es inválida, solo que no pude confirmarla. Distinto de saber que es falsa.</td></tr>
+    <tr><td><span class="pill da">success_signature_invalid</span></td><td>Descifrado OK · <span class="k">p256.verify()</span> devolvió <span class="k">false</span></td><td>La matemática confirmó que la firma no corresponde al contenido. Posible alteración. No es un fallo temporal.</td></tr>
+    <tr><td><span class="pill da">error</span></td><td>QR inválido · auth tag falló · 404 (expirado/bloqueado/inexistente) · sin red</td><td>No hay datos que mostrar. Si es descifrado: clave incorrecta o datos alterados en tránsito.</td></tr>
+  </table>
+  <div class="card" style="margin-top:14px;padding:11px 16px">
+    <p style="font-size:14px;line-height:1.6">En los tres estados <b>success</b> los datos FHIR se muestran siempre — el criterio clínico lo toma el profesional. El verifier informa el estado criptográfico con claridad: <b>escudo verde</b> · <b>triángulo amarillo</b> · <b>escudo rojo</b>.</p>
   </div>
 </section>
 
 <!-- ============ 11 · IA BFF+MCP ============ -->
 <section class="slide" id="s11">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">11</span><span class="seg">·17</span> <span>Capa de IA · BFF + MCP</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">19</span><span class="seg">·26</span> <span>Capa de IA · BFF + MCP</span><span class="bar"></span></div>
   <h1 class="title">Análisis asistido en dos fases</h1>
   <div class="diawrap" id="dia-ai" style="flex:none;height:330px"></div>
   <div class="chips" style="margin-top:10px">
@@ -400,7 +680,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 12 · IA LÍMITES ============ -->
 <section class="slide" id="s12">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">12</span><span class="seg">·17</span> <span>IA · control y límites</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">20</span><span class="seg">·26</span> <span>IA · control y límites</span><span class="bar"></span></div>
   <h1 class="title">Útil, trazable y subordinada a la verificación</h1>
   <div class="cols">
     <div class="col">
@@ -427,7 +707,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 13 · VALIDACIÓN ============ -->
 <section class="slide" id="s13">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">13</span><span class="seg">·17</span> <span>Validación</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">21</span><span class="seg">·26</span> <span>Validación</span><span class="bar"></span></div>
   <h1 class="title">Tres niveles de prueba</h1>
   <div class="cardgrid" style="grid-template-columns:repeat(3,1fr)">
     <div class="card"><h3>Unitarias · CI</h3><p><b>Jest + ts-jest</b> sobre el issuer: generación de SHC/SHL, minimización del bundle FHIR, transformación de recursos. Integradas al pipeline de <b>GitHub Actions</b> — bloquean merge si fallan. Cobertura sobre los módulos de firma y cifrado.</p></div>
@@ -439,7 +719,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 14 · DEMO ============ -->
 <section class="slide" id="s14" style="background:linear-gradient(135deg,#0B1B2B,#0E5560)">
-  <div class="eyebrow" style="color:var(--cyan)"><span class="seg" style="color:#8fb0b8">shlink:/</span> <span class="num" style="color:#fff">14</span><span class="seg" style="color:#8fb0b8">·17</span> <span style="color:#cfe0e6">Demo</span><span class="bar" style="background:rgba(255,255,255,.2)"></span></div>
+  <div class="eyebrow" style="color:var(--cyan)"><span class="seg" style="color:#8fb0b8">shlink:/</span> <span class="num" style="color:#fff">22</span><span class="seg" style="color:#8fb0b8">·26</span> <span style="color:#cfe0e6">Demo</span><span class="bar" style="background:rgba(255,255,255,.2)"></span></div>
   <h1 class="title" style="color:#fff;font-size:46px">Demo en vivo · recorrido funcional</h1>
   <div class="diawrap" id="dia-demo" style="flex:none;height:300px"></div>
   <p style="color:#c7d8de;font-size:16px;margin-top:18px;text-align:center;font-family:var(--mono)">portal → emisión → QR → escaneo → descifrado → validación → visualización → análisis IA</p>
@@ -447,7 +727,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 15 · RIESGOS ============ -->
 <section class="slide" id="s15">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">15</span><span class="seg">·17</span> <span>Riesgos · lecciones</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">23</span><span class="seg">·26</span> <span>Riesgos · lecciones</span><span class="bar"></span></div>
   <h1 class="title">Riesgos materializados y aprendizajes</h1>
   <table class="t">
     <tr><th style="width:30%">Riesgo</th><th style="width:38%">Qué pasó</th><th>Respuesta / lección</th></tr>
@@ -460,7 +740,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- ============ 16 · CONCLUSIONES + FUTURO ============ -->
 <section class="slide" id="s16">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">16</span><span class="seg">·17</span> <span>Conclusiones · futuro</span><span class="bar"></span></div>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">24</span><span class="seg">·26</span> <span>Conclusiones · futuro</span><span class="bar"></span></div>
   <h1 class="title">Lo que se demostró y lo que sigue</h1>
   <div class="cols">
     <div class="col">
@@ -500,7 +780,7 @@ svg.diagram{width:100%;height:100%;display:block}
 
 <!-- chrome -->
 <div id="chrome"><div id="prog"><i></i></div></div>
-<div id="count">slide <b id="cur">1</b> / 18 &nbsp;·&nbsp; <span id="timer">00:00</span></div>
+<div id="count">slide <b id="cur">1</b> / 26 &nbsp;·&nbsp; <span id="timer">00:00</span></div>
 <div id="bar">
   <div class="btn" onclick="prev()">◀</div>
   <div class="btn" onclick="next()">▶</div>
@@ -522,9 +802,9 @@ svg.diagram{width:100%;height:100%;display:block}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 /* ---------------- data ---------------- */
-const TOTAL=18;
-const titles=["Carátula","Agenda","Problema y contexto","Objetivo y alcance","Fundamentos","Metodología","Arquitectura general","Nēxo Issuer","Issuer · seguridad","Nēxo Verifier","Verifier · confianza","Capa de IA · BFF+MCP","IA · control y límites","Validación","Demo en vivo","Riesgos y lecciones","Conclusiones y futuro","Cierre · Preguntas"];
-const durs=["1:00","0:30","2:30","2:00","2:30","2:00","3:00","3:00","2:30","3:00","2:30","3:00","2:00","2:00","9:00","3:00","2:30","0:30"];
+const TOTAL=26;
+const titles=["Carátula","Agenda","Problema y contexto","Objetivo y alcance","Fundamentos","Metodología","Arquitectura general","Nēxo Issuer","Issuer · ¿por qué firmar?","Issuer · JWS estructura","Issuer · ¿por qué cifrar?","Issuer · JWE estructura","Issuer · el QR","Issuer · seguridad","Nēxo Verifier","Verifier · JWE decrypt","Verifier · ES256 verify","Verifier · independencia y estados","Verifier · confianza","Capa de IA · BFF+MCP","IA · control y límites","Validación","Demo en vivo","Riesgos y lecciones","Conclusiones y futuro","Cierre · Preguntas"];
+const durs=["1:00","0:30","2:30","2:00","2:30","2:00","3:00","3:00","1:30","1:30","1:30","1:30","1:00","2:00","3:00","2:00","2:00","1:30","2:00","2:30","2:00","2:00","9:00","3:00","2:30","0:30"];
 const notes=[
 /*0*/`<b>Apertura (≈1 min).</b> Buenos días/tardes. Presentamos <b>Nēxo</b>, nuestro Trabajo Profesional de Ingeniería en Informática. Es un <b>ecosistema de credenciales sanitarias digitales interoperables</b> basado en tres estándares abiertos —<em>HL7 FHIR, SMART Health Cards y SMART Health Links</em>— con una capa opcional de IA. Somos el equipo 163, dirigidos por el Lic. Gustavo Carolo, del Hospital Garrahan. La presentación dura unos 30 minutos e incluye una demo en vivo; al final abrimos a preguntas.`,
 /*1*/`<b>(≈30 s).</b> Recorrido: arrancamos por el <b>problema</b> y el contexto sanitario, el <b>objetivo</b> y el alcance, y los <b>estándares</b> que usamos. Luego la <b>metodología</b>, la <b>arquitectura</b> y cada componente: <b>Issuer</b>, <b>Verifier</b> y la <b>capa de IA</b>. Después <b>validación</b>, la <b>demo</b>, los <b>riesgos y lecciones</b>, y cerramos con <b>conclusiones, trabajos futuros y preguntas</b>.`,
@@ -533,17 +813,25 @@ const notes=[
 /*4*/`<b>(≈2:30).</b> Cuatro piezas complementarias. <b>FHIR R4</b> (HL7, finalizado 2018) representa el dato clínico de forma estructurada sobre REST/JSON. Hoy es el estándar dominante global: el 71% de países lo usan activamente, el 78% de países con regulación de datos de salud lo obligan o recomiendan, y más del 90% de hospitales en EE.UU. ya lo adoptaron. <b>SMART Health Cards</b> toma ese bundle y lo firma como JWS ES256: convirtió el certificado de vacunación COVID-19 en un QR verificable —fue adoptado como estándar de facto en EE.UU., todas las provincias de Canadá, Japón y otros países—. No solo digitaliza: permite <b>comprobar</b> autenticidad e integridad matemáticamente. <b>SMART Health Links</b> resuelve el límite físico del QR —unos 1.200 caracteres— convirtiéndolo en un <b>puntero seguro</b> a contenido remoto cifrado; agrega expiración, passcode y revocación. <b>MCP</b> (Anthropic, 2024) permite que un modelo descubra e invoque herramientas en runtime sin reentrenamiento. Lo importante: la IA se apoya en MCP <b>sin tocar la cadena de confianza criptográfica</b>.`,
 /*5*/`<b>(≈2 min).</b> Trabajamos con una metodología <b>ágil híbrida</b>. Kanban en GitHub Projects, historias de usuario con criterios de aceptación y una <b>Definition of Done</b> común que exigía implementación, validación, Pull Request, ausencia de secretos en el código y documentación mínima. El control de versiones fue por <b>ramas y PRs</b>. Automatizamos con <b>GitHub Actions</b> para tests, <b>Expo</b> para builds del APK y <b>Langfuse</b> para trazar la IA. Lo más relevante: construimos <b>por capas incrementales</b> —primero generar, después publicar, luego verificar y por último interpretar— validando cada etapa antes de avanzar, en lugar de integrar todo al final.`,
 /*6*/`<b>(≈3 min). Diagrama clave.</b> Recorran el ecosistema: a la izquierda, el <b>portal de pacientes</b> dispara la emisión y el <b>servidor FHIR</b> (HAPI con datos Synthea) es la fuente clínica. En el centro, el <b>Issuer</b> obtiene los recursos, genera las SHC, las cifra y las deja en <b>S3</b>, mientras persiste la sesión en <b>PostgreSQL</b> y publica su <b>JWKS</b>. El resultado es un <b>QR con un shlink:/</b>. A la derecha, el <b>Verifier</b> móvil escanea ese QR, pide el <em>manifiesto</em> al Issuer, descarga el contenido cifrado de S3, lo descifra y valida la firma contra el JWKS. Abajo, la <b>capa de IA opcional</b>: el Verifier llama al <b>BFF</b>, que orquesta el <b>MCP</b> y registra en <b>Langfuse</b>. Noten que el contenido cifrado se descarga directo de S3: el Issuer no es intermediario del dato.`,
-/*7*/`<b>(≈3 min).</b> El Issuer está en <b>Node 20 / Express 5 / TypeScript</b>, con arquitectura en capas e inyección de dependencias. Tres módulos de rutas: <em>health</em>, <em>jwks</em> y <em>shl</em>. Logging estructurado con <b>Pino + pino-http</b> y <b>correlationId</b> propagado end-to-end para trazabilidad. Swagger UI disponible en <em>/api-docs</em>. El flujo: recibe <em>POST /api/shl/issue</em> con el paciente y los tipos de recurso (multiportal con routing dinámico por API key); consulta el FHIR; arma bundles. Luego <b>sanitiza y minimiza</b> según la guía de SHC —para Patient solo nombre y fecha; se quitan ids, metadatos, narrativa y extensiones—. Genera la <b>SHC</b>: serializa, comprime DEFLATE y firma <b>ES256</b>. Cifra cada tarjeta como <b>JWE</b>, la sube a S3, persiste la sesión en PostgreSQL con <span class="k">SELECT FOR UPDATE</span> y construye el <b>shlink:/</b> con su QR. Detalle de diseño: genera <b>una SHC por tipo de recurso</b>, para granularidad y bundles más pequeños. La clave pública se publica en <em>/.well-known/jwks.json</em>.`,
-/*8*/`<b>(≈2:30).</b> Una lección central: la criptografía es <b>arquitectura</b>. <b>Firma</b>: clave privada en <em>AWS Parameter Store</em> como SecureString cifrado con KMS — nunca en variables de entorno planas. Se carga con <em>WithDecryption=true</em> y se importa como clave <em>ES256 P-256</em> con <em>jose.importJWK()</em>. Hay protección contra race condition en la carga: una sola promesa concurrente. <b>Cifrado en reposo</b>: JWE Compact con <em>alg: dir</em> (sin intercambio de clave) y <em>enc: A256GCM</em> — IV de 12 bytes, auth tag de 128 bits. Clave de 32 bytes por sesión generada aleatoriamente, nunca persistida, solo viaja en el QR; eso convierte a S3 en un <b>repositorio ciego</b>. <b>Manifiesto</b>: <em>SELECT FOR UPDATE</em> previene condiciones de carrera. Passcode de 6 dígitos (100k–999k), bcrypt con 12 salt rounds. El <em>401</em> devuelve <em>remainingAttempts</em>; cuando se agotan los 5 intentos (default), el bloqueo responde <em>404</em> idéntico al de un SHL inexistente — sin información de canal lateral. <b>Resiliencia</b>: circuit breaker hacia FHIR (threshold 50%, reset 30 s, min 3 requests). Arquitectura multiportal: el header <em>x-api-key</em> routea dinámicamente a distintos servidores FHIR.`,
-/*9*/`<b>(≈3 min). Diagrama del Verifier.</b> Está en <b>React Native 0.81.5 + Expo SDK 54</b>. El recorrido: escanea el QR y valida el esquema <em>shlink:/</em>; decodifica el payload Base64URL. Según el <em>flag</em> elige el modo (contenido directo <em>U</em>, passcode <em>P</em>, o manifiesto estándar). Recupera el contenido cifrado, lo <b>descifra</b> con la clave del enlace usando @noble/curves y node-forge, decodifica el JWS, descomprime DEFLATE con pako y obtiene el bundle. Finalmente resuelve el emisor, consulta su <b>JWKS</b> y valida la firma <b>ES256 P-256</b>. Tres decisiones de seguridad móvil: la clave de descifrado se trata como material sensible con <b>consumo único en memoria</b>, no se guarda <b>historial clínico local</b>, y la terminología (<b>38.293 nombres LOINC en español</b> como asset local + NLM bajo demanda, y 289 CVX en caché) es lo único que se persiste.`,
-/*10*/`<b>(≈2:30).</b> Insistimos en una distinción conceptual: hay <b>dos capas y no son lo mismo</b>. <b>Descifrar</b> con AES-256-GCM da acceso al contenido y, por el <em>tag</em> de autenticación, garantiza integridad. <b>Verificar la firma</b> ES256 contra el JWKS del emisor es lo que da <b>confianza en el origen</b>. Descifrar no implica confiar. Por eso el Verifier expone una <b>máquina de estados</b>: <em>success</em> (todo bien); <em>success_unverified</em> (se descifró pero no se pudo bajar el JWKS por conectividad —se muestra con advertencia—); <em>success_signature_invalid</em> (la firma no coincide: severidad máxima, no es algo temporal); y <em>error</em>. En salud no alcanza con mostrar el dato: hay que dejar claro <b>si está verificado</b>.`,
-/*11*/`<b>(≈3 min). Diagrama de la IA.</b> Dos componentes. <b>nexo-mcp</b>: servidor Python con FastMCP que expone <b>7 herramientas</b> —OpenFDA (reacciones adversas FDA), RxNorm/RxTerms (NLM), traducir_codigo_loinc (NLM ClinicalTables), consultar_loinc_fhir (HL7 tx.fhir.org con propiedades clínicas completas), ICD-10, buscar_medicamento, buscar_vacuna_cvx—; corre como <b>subproceso por stdio</b>, sin puerto HTTP, sin superficie de red expuesta. <b>nexo-bff-ai</b>: Express/TS con Vercel AI SDK, el único que habla con el LLM — centraliza autenticación y secretos. Soporta <b>cuatro providers</b>: Groq/llama-3.3-70b (default), GPT-4o, Claude-3.5-sonnet, Gemini. El móvil nunca toca el LLM. Detalle técnico: se usan <b>dos modelos distintos por fase</b>. En <b>Fase 1</b> (enrutamiento/tool-calling), un modelo más liviano (llama-3.3-70b, gpt-4o-mini, claude-haiku, gemini-flash) recibe el recurso FHIR con sus códigos y la lista de tools y decide cuáles invocar y con qué argumentos — el BFF ejecuta esas llamadas contra el MCP. En <b>Fase 2</b> (redacción clínica), un modelo más capaz recibe el FHIR <b>sin identificadores del paciente</b> y los resultados verificados de las APIs y redacta exactamente <b>dos párrafos en español</b>. El system prompt le prohíbe usar conocimiento propio fuera de las fuentes.`,
-/*12*/`<b>(≈2 min).</b> Para que la IA sea confiable y trazable. <b>Grounding Judge</b> (LLM-as-a-Judge): evalúa de forma <b>asíncrona</b> si cada párrafo del análisis está respaldado por las fuentes retornadas por el MCP — score binario (1/0), sin sumar latencia al usuario. <b>Langfuse</b>: trazas jerárquicas con spans por fase (enrutamiento → tool calls → redacción → judge), scores del juez y feedback humano; el campo <em>subject</em> del recurso FHIR se remueve antes de registrar para no exponer al paciente. <b>Feedback de usuario</b>: el endpoint <em>POST /api/score</em> recibe score (1 = 👍, 0 = 👎) y lo envía a Langfuse — permite identificar patrones de respuestas insatisfactorias sin reentrenamiento. Refinamos iterativamente con datos reales: alucinaciones, menciones no pedidas de ausencia de datos, falsos negativos del juez y análisis penalizados por mezcla de idiomas fueron identificados y corregidos en el system prompt. El límite es explícito: la IA <b>no valida criptográficamente, no decide validez y no reemplaza el criterio profesional</b>; solo complementa la interpretación, siempre después de la verificación criptográfica.`,
-/*13*/`<b>(≈2 min).</b> Validamos en tres niveles. <b>Unitarias</b> con Jest sobre el Issuer —generación de SHC/SHL y transformación FHIR— integradas a CI con GitHub Actions. <b>Independiente</b>: las SHC se validaron con herramientas de referencia de <em>SMART Health IT</em>, y el Verifier se probó con QR generados por terceros, demostrando <b>interoperabilidad real</b>, no solo con nuestro propio emisor. <b>End-to-end</b>: flujo completo con <b>Synthea + HAPI FHIR</b> y un portal simulado, incluyendo casos límite —bloqueo por passcode, revocación idempotente y detección de firmas alteradas—. La prueba con usuarios reales del <b>Garrahan</b> no se concretó por madurez del entorno y queda como futuro; por eso trabajamos con datos sintéticos.`,
-/*14*/`<b>DEMO (≈9 min).</b> Mostramos el recorrido completo. <b>1)</b> En el <b>portal</b>, el paciente elige los recursos (vacunas / laboratorio) y si requiere passcode; <b>2)</b> el Issuer emite y devuelve el <b>QR</b> (que se puede descargar o enviar por mail). <b>3)</b> En la app, <b>escaneamos</b> el QR; <b>4)</b> se resuelve el SHL y se baja el manifiesto; <b>5)</b> se <b>descifra</b> localmente; <b>6)</b> se <b>valida la firma</b> contra el JWKS y aparece el estado de verificación; <b>7)</b> se ven los <b>datos clínicos</b> con la terminología resuelta; <b>8)</b> opcionalmente pedimos el <b>análisis de IA</b>. Si hay tiempo, mostramos también casos de error: un <b>QR con firma alterada</b> (success_signature_invalid) y el <b>bloqueo por passcode</b>. <em>Plan B si falla la red: tenemos capturas y un video de respaldo.</em>`,
-/*15*/`<b>(≈3 min).</b> Riesgos que se materializaron. <b>SHC-en-QR vs SHL</b>: la decisión no fue trivial; elegimos <b>SHL</b> por capacidad y por alinearnos con el estándar, asumiendo más complejidad (manifiestos, claves, modos). <b>Infra y seguridad</b>: tuvimos que definir qué se expone y cómo —resuelto con HTTPS, API keys, VPC privada y separación público/interno—. <b>IA y MCP</b>: no bastaba conectar un modelo; hubo que lograr buen tool-calling y evitar alucinaciones, lo que nos llevó a acotar el rol de la IA y sumar el Grounding Judge. Y el más importante para el alcance: la <b>integración con Garrahan</b> no era viable aún (solo recursos Patient, portal no operativo), así que ajustamos a <b>entornos controlados</b> sin cambiar la arquitectura. Lección transversal: <b>los estándares hay que respetarlos al detalle</b> o la credencial deja de ser verificable afuera.`,
-/*16*/`<b>(≈2:30).</b> Conclusiones: demostramos la <b>viabilidad técnica</b> extremo a extremo de credenciales interoperables, portables y verificables; que FHIR + SHC + SHL se articulan <b>sin acoplar</b> emisor y verificador; el valor de <b>separar confianza de interpretación</b>; y que la seguridad es <b>transversal</b>. El aporte central es una <b>arquitectura funcional documentada</b> que integra estándares consolidados con tecnologías emergentes preservando trazabilidad e independencia. Hacia adelante: integración con <b>infraestructura institucional real</b>, más <b>recursos FHIR</b>, un <b>marco de confianza</b> (listas, rotación de claves, auditoría), <b>validación con usuarios</b> y evolución de la IA.`,
-/*17*/`<b>Cierre (≈30 s).</b> En síntesis, Nēxo integra <b>estándares abiertos, seguridad criptográfica, verificación móvil e interpretación asistida</b> en un mismo ecosistema. Muchas gracias por su atención; quedamos a disposición para sus <b>preguntas</b>.`
+/*7*/`<b>(≈3 min). Issuer overview.</b> El diagrama cuenta la historia visual: FHIR → Sanitizar → SHC (firma) → JWE (cifra) → S3 → shlink:/ + QR. Detallá cada paso brevemente y usá los tres cards para el WHY. <b>Card 1 — Firma:</b> ES256 prueba el origen. Cualquiera podría fabricar un QR con datos falsos; la firma hace eso imposible sin la clave privada. La clave pública en <em>/.well-known/jwks.json</em>: verificación autónoma, sin depender del issuer. <b>Card 2 — Cifrado:</b> S3 es un repositorio ciego porque el issuer nunca conoce la clave AES. Si S3 es comprometido, lo que tiene son bytes aleatorios sin valor. La clave vive solo en el QR del paciente: el paciente controla el acceso. <b>Card 3 — Manifiesto:</b> el manifiesto no se almacena — se construye cuando el verifier lo pide. El issuer valida la sesión, genera URLs prefirmadas de S3 (≤1h) y el verifier descarga directo de S3. Una SHC por tipo de recurso clínico (vacunas / laboratorio), una por emisión, para granularidad.`,
+/*8*/`<b>(≢21:30). ¿Por qué firmar?</b> La firma ES256 hace imposible falsificar un QR sin la clave privada de la institucion. Cualquiera puede fabricar un JSON con datos medicos; la firma hace eso imposible sin poseer la clave privada. La clave publica esta en <em>/.well-known/jwks.json</em>: el verificador valida de forma autonoma, sin depender del issuer ni de ningun intermediario. La clave privada en AWS Parameter Store, SecureString + KMS, cargada con <em>WithDecryption:true</em> en startup.`,
+/*9*/`<b>(≢21:30). JWS estructura.</b> JWS tiene tres partes en Base64URL separadas por punto. El <em>header</em> (amber) tiene alg:ES256, zip:DEF, kid:nexo-1. <em>zip:DEF</em> indica que el payload viene comprimido con DEFLATE — la compresion es necesaria porque el bundle FHIR crudo no cabe en un QR. El <em>payload</em> (teal) es el bundle FHIR minimizado, comprimido con DEFLATE, y encodificado en Base64URL. La <em>firma</em> (ink) son 64 bytes = r concatenado s, las dos coordenadas del punto de la curva P-256.`,
+/*10*/`<b>(≢21:30). ¿Por qué cifrar?</b> Si el issuer subiera los JWS directamente a S3, una brecha expone todos los datos clinicos. La clave AES de 32 bytes se genera aleatoriamente por sesion, NUNCA se persiste en el servidor, y viaja solo en el QR del paciente. S3 almacena bytes opacos. Si S3 es comprometido, lo que tiene son bytes sin valor: la clave nunca estuvo ahi.`,
+/*11*/`<b>(≈21:30). JWE estructura &mdash; issuer.</b> JWE tiene cinco partes en Base64URL separadas por punto. (1) <em>Header</em>: alg:dir (la clave AES viene directo del QR, sin intercambio de clave — por eso la segunda parte esta vacia), enc:A256GCM. (2) Clave cifrada: vacia porque en modo dir no hay intercambio. (3) <em>IV de 12 bytes aleatorios</em>: fundamental para que el mismo bundle produzca ciphertext diferente cada vez — sin IV distinto, un observador detectaria que el contenido se repite. (4) <em>Ciphertext</em>: el JWS cifrado con AES-256-GCM. (5) <em>Auth tag de 128 bits</em>: cubre ciphertext + header + IV. Un solo byte alterado en S3 hace que el descifrado falle. No es solo confidencialidad: es integridad garantizada.`,
+/*12*/`<b>(≢21:00). El QR resultado.</b> El QR es simplemente <em>shlink:/</em> seguido de un Base64URL que decodifica a <em>{ url, key, flag }</em>. La url es el endpoint del issuer. La key son los 32 bytes de la clave AES-256 en Base64URL — esta es la clave que descifra el JWE. El flag "P" indica que el endpoint requiere passcode. Esos tres campos son todo lo que el verifier necesita para arrancar.`,
+/*13*/`<b>(≈2 min). Control de acceso.</b> Esta slide cubre la seguridad que NO es criptografía de firma o cifrado — es el control de quién puede acceder al manifiesto. <b>Passcode:</b> generado con <em>crypto.randomInt(100000, 1000000)</em>, no <em>Math.random()</em> que no es criptográficamente seguro. El número en texto plano NUNCA se guarda: bcrypt 12 rounds, solo el hash entra a la DB. <b>Anti-brute-force:</b> <em>SELECT FOR UPDATE</em> hace atómica la validación — si dos requests llegan simultáneamente con el mismo passcode, solo uno puede validar. Passcode incorrecto → <em>401</em> con <em>remainingAttempts</em>. Al agotar los 5 intentos (default configurable) la sesión se desactiva y responde <em>404</em> idéntico al de un SHL expirado o inexistente — sin side-channel, un atacante no sabe qué pasó. <b>Circuit breaker:</b> si el 50% de los requests a HAPI FHIR falla en una ventana de ≥ 3 requests, el circuit breaker se abre y resetea a los 30 s. Protege contra cascada. <b>Multiportal:</b> el header <em>x-api-key</em> routea al FHIR correcto, sin instancias separadas por institución.`,
+/*14*/`<b>(≈3 min). Diagrama del Verifier.</b> Arrancá mencionando que el verifier recibe el QR y tiene que hacer lo inverso de lo que hizo el issuer: descifrar + verificar. Pero con sus propias decisiones de diseño. <b>Card 1 — shlStore:</b> el payload <em>shlink:/eyJ...</em> se decodifica (Base64URL → JSON) → <em>{ url, key, flag }</em>. La clave AES NO puede ser un nav param de Expo Router: los params se serializan en el historial de navegación y pueden aparecer en crash reporters. Va a shlStore, variable en memoria, consume-once: <em>consumePendingShl()</em> lee y borra en un solo paso. Si se llama dos veces, la segunda devuelve null. <b>Card 2 — Manifiesto:</b> el manifiesto no existe hasta que el verifier lo pide. POST → issuer valida → genera URLs prefirmadas de S3 (vida ≤ 1h) → verifier descarga JWEs directo de S3. Cada JWE descifrado da <em>{ verifiableCredential: [JWS, ...] }</em>: un JWS es una SMART Health Card. Puede haber uno por tipo de recurso clínico. <b>Card 3 — La distinción clave:</b> descifrar con AES-GCM da acceso e integridad, pero no prueba el origen — cualquiera podría fabricar un JWE. La firma ES256 dentro del JWS es lo que responde eso. Son dos operaciones independientes.`,
+/*15*/`<b>(≢2:00). JWE decrypt — paso 1.</b> La clave del QR (32 bytes AES-256) + el IV de 12 bytes del JWE descifran el ciphertext. El auth tag de 128 bits verifica que nada fue alterado — se calcula sobre clave + IV + ciphertext + header al cifrar. Si alguien modifico un solo byte en S3, en transito, donde sea, decipher.finish() devuelve false. clearKey() se llama SIEMPRE, incluso si falla, para no dejar la clave en memoria. El IV aleatorio es fundamental: sin un IV distinto por mensaje, cifrar el mismo bundle dos veces produciria el mismo ciphertext y un observador detectaria que el contenido se repite.`,
+/*16*/`<b>(≢2:00). ES256 verify — paso 2.</b> El JWS tiene header con alg:ES256, zip:DEF, kid. El payload en Base64URL se decodifica en bytes, luego DEFLATE decompress, luego JSON con el bundle FHIR y el campo iss. El JWKS se descarga de {iss}/.well-known/jwks.json. Se reconstruye el punto EC P-256: 0x04 concatenado x concatenado y = 65 bytes, validado sobre la curva. Luego SHA-256("header.payload") produce 32 bytes fijos. Finalmente p256.verify(sig 64B, hash 32B, pubkey 65B). SHA-256 es necesario porque ECDSA no opera sobre datos de longitud variable — necesita exactamente 32 bytes. Un solo bit cambiado en el bundle cambia aprox. la mitad de los bits del hash.`,
+/*17*/`<b>(≢1:30). Independencia y estados.</b> Extraer el bundle FHIR y verificar la firma son dos try/catch independientes. Si la firma falla, los datos se muestran de todas formas — el criterio clinico es del profesional. Los cuatro estados: success (descifrado OK + firma valida), success_unverified (descifrado OK + JWKS inaccesible por red — "no pude verificar" no es lo mismo que "verifique y es falso"), success_signature_invalid (descifrado OK + p256.verify devolvio false — no es temporal, la firma no corresponde al contenido), error (auth tag fallo / 404 expirado-bloqueado-inexistente / QR invalido / sin red). En los tres estados success los datos FHIR se muestran siempre.`,
+/*18*/`<b>(≈2 min). Los cuatro estados.</b> Usá esta slide para anclar la diferencia entre los tres "success" — todos muestran datos FHIR, pero con distintos niveles de confianza. <b>success:</b> todo fue bien — descifrado correcto y firma matemáticamente válida. El issuer es quien dice ser. <b>success_unverified:</b> no sé si la firma es válida porque no pude bajar el JWKS — problema de red. Distinto a saber que es falsa. <b>success_signature_invalid:</b> me conecté, obtuve la clave pública, hice la matemática — y p256.verify devolvió false. No es temporal. La credencial fue alterada o la firma no corresponde. <b>error:</b> no hay datos que mostrar: auth tag falló (datos alterados o clave incorrecta), 404 (expiró / agotó intentos / no existe — indistinguible por diseño), QR malformado o red caída. <b>La regla general:</b> en los tres estados "success" los datos se muestran. El criterio clínico lo toma el profesional, informado por el estado criptográfico. Icono verde · amarillo · rojo.`,
+/*19*/`<b>(≈3 min). Diagrama de la IA.</b> Dos componentes. <b>nexo-mcp</b>: servidor Python con FastMCP que expone <b>7 herramientas</b> —OpenFDA (reacciones adversas FDA), RxNorm/RxTerms (NLM), traducir_codigo_loinc (NLM ClinicalTables), consultar_loinc_fhir (HL7 tx.fhir.org con propiedades clínicas completas), ICD-10, buscar_medicamento, buscar_vacuna_cvx—; corre como <b>subproceso por stdio</b>, sin puerto HTTP, sin superficie de red expuesta. <b>nexo-bff-ai</b>: Express/TS con Vercel AI SDK, el único que habla con el LLM — centraliza autenticación y secretos. Soporta <b>cuatro providers</b>: Groq/llama-3.3-70b (default), GPT-4o, Claude-3.5-sonnet, Gemini. El móvil nunca toca el LLM. Detalle técnico: se usan <b>dos modelos distintos por fase</b>. En <b>Fase 1</b> (enrutamiento/tool-calling), un modelo más liviano (llama-3.3-70b, gpt-4o-mini, claude-haiku, gemini-flash) recibe el recurso FHIR con sus códigos y la lista de tools y decide cuáles invocar y con qué argumentos — el BFF ejecuta esas llamadas contra el MCP. En <b>Fase 2</b> (redacción clínica), un modelo más capaz recibe el FHIR <b>sin identificadores del paciente</b> y los resultados verificados de las APIs y redacta exactamente <b>dos párrafos en español</b>. El system prompt le prohíbe usar conocimiento propio fuera de las fuentes.`,
+/*20*/`<b>(≈2 min).</b> Para que la IA sea confiable y trazable. <b>Grounding Judge</b> (LLM-as-a-Judge): evalúa de forma <b>asíncrona</b> si cada párrafo del análisis está respaldado por las fuentes retornadas por el MCP — score binario (1/0), sin sumar latencia al usuario. <b>Langfuse</b>: trazas jerárquicas con spans por fase (enrutamiento → tool calls → redacción → judge), scores del juez y feedback humano; el campo <em>subject</em> del recurso FHIR se remueve antes de registrar para no exponer al paciente. <b>Feedback de usuario</b>: el endpoint <em>POST /api/score</em> recibe score (1 = 👍, 0 = 👎) y lo envía a Langfuse — permite identificar patrones de respuestas insatisfactorias sin reentrenamiento. Refinamos iterativamente con datos reales: alucinaciones, menciones no pedidas de ausencia de datos, falsos negativos del juez y análisis penalizados por mezcla de idiomas fueron identificados y corregidos en el system prompt. El límite es explícito: la IA <b>no valida criptográficamente, no decide validez y no reemplaza el criterio profesional</b>; solo complementa la interpretación, siempre después de la verificación criptográfica.`,
+/*21*/`<b>(≈2 min).</b> Validamos en tres niveles. <b>Unitarias</b> con Jest sobre el Issuer —generación de SHC/SHL y transformación FHIR— integradas a CI con GitHub Actions. <b>Independiente</b>: las SHC se validaron con herramientas de referencia de <em>SMART Health IT</em>, y el Verifier se probó con QR generados por terceros, demostrando <b>interoperabilidad real</b>, no solo con nuestro propio emisor. <b>End-to-end</b>: flujo completo con <b>Synthea + HAPI FHIR</b> y un portal simulado, incluyendo casos límite —bloqueo por passcode, revocación idempotente y detección de firmas alteradas—. La prueba con usuarios reales del <b>Garrahan</b> no se concretó por madurez del entorno y queda como futuro; por eso trabajamos con datos sintéticos.`,
+/*22*/`<b>DEMO (≈9 min).</b> Mostramos el recorrido completo. <b>1)</b> En el <b>portal</b>, el paciente elige los recursos (vacunas / laboratorio) y si requiere passcode; <b>2)</b> el Issuer emite y devuelve el <b>QR</b> (que se puede descargar o enviar por mail). <b>3)</b> En la app, <b>escaneamos</b> el QR; <b>4)</b> se resuelve el SHL y se baja el manifiesto; <b>5)</b> se <b>descifra</b> localmente; <b>6)</b> se <b>valida la firma</b> contra el JWKS y aparece el estado de verificación; <b>7)</b> se ven los <b>datos clínicos</b> con la terminología resuelta; <b>8)</b> opcionalmente pedimos el <b>análisis de IA</b>. Si hay tiempo, mostramos también casos de error: un <b>QR con firma alterada</b> (success_signature_invalid) y el <b>bloqueo por passcode</b>. <em>Plan B si falla la red: tenemos capturas y un video de respaldo.</em>`,
+/*23*/`<b>(≈3 min).</b> Riesgos que se materializaron. <b>SHC-en-QR vs SHL</b>: la decisión no fue trivial; elegimos <b>SHL</b> por capacidad y por alinearnos con el estándar, asumiendo más complejidad (manifiestos, claves, modos). <b>Infra y seguridad</b>: tuvimos que definir qué se expone y cómo —resuelto con HTTPS, API keys, VPC privada y separación público/interno—. <b>IA y MCP</b>: no bastaba conectar un modelo; hubo que lograr buen tool-calling y evitar alucinaciones, lo que nos llevó a acotar el rol de la IA y sumar el Grounding Judge. Y el más importante para el alcance: la <b>integración con Garrahan</b> no era viable aún (solo recursos Patient, portal no operativo), así que ajustamos a <b>entornos controlados</b> sin cambiar la arquitectura. Lección transversal: <b>los estándares hay que respetarlos al detalle</b> o la credencial deja de ser verificable afuera.`,
+/*24*/`<b>(≈2:30).</b> Conclusiones: demostramos la <b>viabilidad técnica</b> extremo a extremo de credenciales interoperables, portables y verificables; que FHIR + SHC + SHL se articulan <b>sin acoplar</b> emisor y verificador; el valor de <b>separar confianza de interpretación</b>; y que la seguridad es <b>transversal</b>. El aporte central es una <b>arquitectura funcional documentada</b> que integra estándares consolidados con tecnologías emergentes preservando trazabilidad e independencia. Hacia adelante: integración con <b>infraestructura institucional real</b>, más <b>recursos FHIR</b>, un <b>marco de confianza</b> (listas, rotación de claves, auditoría), <b>validación con usuarios</b> y evolución de la IA.`,
+/*25*/`<b>Cierre (≈30 s).</b> En síntesis, Nēxo integra <b>estándares abiertos, seguridad criptográfica, verificación móvil e interpretación asistida</b> en un mismo ecosistema. Muchas gracias por su atención; quedamos a disposición para sus <b>preguntas</b>.`
 ];
 
 /* ---------------- nav ---------------- */
@@ -554,7 +842,7 @@ function show(n){
   slides.forEach((s,k)=>s.classList.toggle('active',k===i));
   document.getElementById('cur').textContent=i+1;
   document.querySelector('#prog>i').style.width=((i)/(TOTAL-1)*100)+'%';
-  document.getElementById('nh-title').textContent=(i+1)+' / 18 · '+titles[i];
+  document.getElementById('nh-title').textContent=(i+1)+' / '+TOTAL+' · '+titles[i];
   document.getElementById('nh-dur').textContent='≈ '+durs[i];
   document.getElementById('nh-text').innerHTML=notes[i];
 }
@@ -590,46 +878,63 @@ function jump(k){toggleOverview();show(k)}
 async function downloadPdf(){
   if(!window.html2canvas||!window.jspdf){alert('Librerías de PDF no disponibles. Verificá la conexión a internet.');return;}
   const {jsPDF}=window.jspdf;
-  // Overlay para ocultar cambios visuales durante la captura
-  const ov=document.createElement('div');
-  ov.style.cssText='position:fixed;inset:0;background:#06121d;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cfe0e6;font-family:JetBrains Mono,monospace;gap:14px';
-  ov.innerHTML='<div style="font-size:15px">Generando PDF…</div><div id="pdf-prog" style="font-size:13px;color:#8fb0b8">diapositiva 0 / '+TOTAL+'</div><div style="width:260px;height:3px;background:#1d3a4a;border-radius:2px"><div id="pdf-bar" style="height:100%;background:linear-gradient(90deg,#0E7C86,#2FA6BA);width:0;transition:width .2s;border-radius:2px"></div></div>';
-  document.body.appendChild(ov);
-  // Deshabilitar animaciones de transición durante captura
+  // Overlay de progreso
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:#06121d;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cfe0e6;font-family:JetBrains Mono,monospace;gap:14px';
+  overlay.innerHTML='<div style="font-size:15px">Generando PDF…</div><div class="pdf-prog" style="font-size:13px;color:#8fb0b8">diapositiva 0 / '+TOTAL+'</div><div style="width:260px;height:3px;background:#1d3a4a;border-radius:2px"><div class="pdf-bar" style="height:100%;background:linear-gradient(90deg,#0E7C86,#2FA6BA);width:0;transition:width .15s;border-radius:2px"></div></div>';
+  document.body.appendChild(overlay);
+  // Suprimir animaciones de transición en el DOM vivo (para que la diapositiva esté ready al capturar)
   const noAnim=document.createElement('style');
-  noAnim.textContent='.slide.active{animation:none!important}';
+  noAnim.textContent='.slide.active{animation:none!important;opacity:1!important;transform:none!important}';
   document.head.appendChild(noAnim);
   const savedI=i, notesWasOpen=notesOpen;
   if(notesOpen)toggleNotes();
   const stage=document.getElementById('stage');
-  const origT=stage.style.transform, origTO=stage.style.transformOrigin;
-  stage.style.transform='scale(1)';
-  stage.style.transformOrigin='top left';
-  await new Promise(r=>setTimeout(r,60));
-  // A4 apaisado · 297×210mm · contenido 16:9 centrado verticalmente
   const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
   const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
   const ih=pw*720/1280, iy=(ph-ih)/2;
-  const prog=document.getElementById('pdf-prog'), bar=document.getElementById('pdf-bar');
+  const prog=overlay.querySelector('.pdf-prog'), pbar=overlay.querySelector('.pdf-bar');
   for(let k=0;k<TOTAL;k++){
     show(k);
     if(prog) prog.textContent='diapositiva '+(k+1)+' / '+TOTAL;
-    if(bar) bar.style.width=(((k+1)/TOTAL)*100)+'%';
-    await new Promise(r=>setTimeout(r,400));
-    const c=await html2canvas(stage,{scale:1,useCORS:true,allowTaint:true,logging:false,backgroundColor:'#F4F7F9',width:1280,height:720});
-    if(k>0)pdf.addPage('a4','landscape');
+    if(pbar) pbar.style.width=(((k+1)/TOTAL)*100)+'%';
+    await new Promise(r=>setTimeout(r,150));
+    const c=await html2canvas(stage,{
+      scale:1, useCORS:true, allowTaint:true, logging:false,
+      backgroundColor:'#F4F7F9', width:1280, height:720,
+      // onclone: arreglar el clon antes de capturar sin tocar el DOM real.
+      // El problema de fondo es que #viewport es position:fixed, lo que hace
+      // que html2canvas use el fondo del body (#06121d) como backdrop del stage.
+      onclone:(clonedDoc)=>{
+        // 1. Sacar el fondo oscuro del body del clon
+        clonedDoc.body.style.background='#F4F7F9';
+        // 2. Convertir #viewport a posicionamiento normal (no fixed)
+        const cv=clonedDoc.getElementById('viewport');
+        if(cv) cv.style.cssText='position:relative;width:1280px;height:720px;display:block;overflow:hidden;background:#F4F7F9';
+        // 3. Quitar transform del stage en el clon
+        const cs=clonedDoc.getElementById('stage');
+        if(cs){cs.style.transform='none';cs.style.boxShadow='none';}
+        // 4. Deshabilitar animaciones/transiciones en el clon
+        const sa=clonedDoc.createElement('style');
+        sa.textContent='*{animation:none!important;transition:none!important}';
+        clonedDoc.head.appendChild(sa);
+        // 5. Ocultar controles de UI en el clon
+        ['chrome','bar','count','hint','notes','ov'].forEach(id=>{
+          const el=clonedDoc.getElementById(id);
+          if(el) el.style.display='none';
+        });
+      }
+    });
+    if(k>0) pdf.addPage('a4','landscape');
     pdf.setFillColor(255,255,255);
     pdf.rect(0,0,pw,ph,'F');
     pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,iy,pw,ih);
   }
-  // Restaurar estado
-  stage.style.transform=origT;
-  stage.style.transformOrigin=origTO;
   noAnim.remove();
   show(savedI);
   if(notesWasOpen)toggleNotes();
   resize();
-  ov.remove();
+  overlay.remove();
   pdf.save('nexo-defensa.pdf');
 }
 
