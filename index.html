@@ -506,16 +506,20 @@ svg.diagram{width:100%;height:100%;display:block}
   <div class="btn" onclick="next()">▶</div>
   <div class="btn" onclick="toggleNotes()" title="Notas (N)">Notas</div>
   <div class="btn" onclick="toggleTimer()" title="Cronómetro (T)">⏱</div>
+  <div class="btn" onclick="resetTimer()" title="Reiniciar cronómetro (R)">↺</div>
   <div class="btn" onclick="toggleOverview()" title="Índice (O)">▦</div>
   <div class="btn" onclick="fs()" title="Pantalla completa (F)">⛶</div>
+  <div class="btn" data-action="pdf" onclick="downloadPdf()" title="Descargar PDF">↓PDF</div>
 </div>
-<div class="hint" id="hint">← → para navegar · N notas · T cronómetro · O índice · F pantalla completa</div>
+<div class="hint" id="hint">← → para navegar · N notas · T cronómetro · R reiniciar · O índice · F pantalla completa</div>
 <div id="notes"><div class="inner">
   <div class="nhead"><span id="nh-title">Notas del orador</span><span class="dur" id="nh-dur"></span></div>
   <div class="ntext" id="nh-text"></div>
 </div></div>
 <div id="ov"><h4>ÍNDICE — clic para saltar</h4><div class="ovgrid" id="ovgrid"></div></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 /* ---------------- data ---------------- */
 const TOTAL=18;
@@ -524,7 +528,7 @@ const durs=["1:00","0:30","2:30","2:00","2:30","2:00","3:00","3:00","2:30","3:00
 const notes=[
 /*0*/`<b>Apertura (≈1 min).</b> Buenos días/tardes. Presentamos <b>Nēxo</b>, nuestro Trabajo Profesional de Ingeniería en Informática. Es un <b>ecosistema de credenciales sanitarias digitales interoperables</b> basado en tres estándares abiertos —<em>HL7 FHIR, SMART Health Cards y SMART Health Links</em>— con una capa opcional de IA. Somos el equipo 163, dirigidos por el Lic. Gustavo Carolo, del Hospital Garrahan. La presentación dura unos 30 minutos e incluye una demo en vivo; al final abrimos a preguntas.`,
 /*1*/`<b>(≈30 s).</b> Recorrido: arrancamos por el <b>problema</b> y el contexto sanitario, el <b>objetivo</b> y el alcance, y los <b>estándares</b> que usamos. Luego la <b>metodología</b>, la <b>arquitectura</b> y cada componente: <b>Issuer</b>, <b>Verifier</b> y la <b>capa de IA</b>. Después <b>validación</b>, la <b>demo</b>, los <b>riesgos y lecciones</b>, y cerramos con <b>conclusiones, trabajos futuros y preguntas</b>.`,
-/*2*/`<b>(≈2:30).</b> El problema tiene tres dimensiones. <b>Fragmentación</b>: aun con sistemas informatizados, los datos viven en silos con formatos y accesos distintos; no se integran fácilmente. El 57.9% de adultos en EE.UU. se ve afectado por fragmentación, con $4.542 de costo adicional anual por paciente en alta fragmentación; el 70% de ejecutivos de salud la citan como barrera crítica. En Argentina, el proyecto HSI ya conectó a más de 2 millones de pacientes en 16 provincias, pero sigue siendo la excepción. <b>Portabilidad no verificable</b>: el paciente suele tener PDFs o capturas <em>sin firma</em>, por lo que un tercero no puede comprobar automáticamente el origen ni la integridad; la validación sigue siendo manual —cualquier imagen puede falsificarse—. <b>Comprensión</b>: los códigos <em>CVX</em> (vacunas CDC), <em>LOINC</em> (laboratorio NLM) e <em>ICD-10</em> (diagnósticos) son esenciales para la interoperabilidad pero opacos para personas sin herramientas de apoyo. La respuesta son los <b>estándares abiertos</b>: representar el dato, transportarlo y <b>verificarlo criptográficamente</b>, manteniendo independencia entre quien emite y quien verifica, sin centralizar datos en un intermediario.`,
+/*2*/`<b>(≈2:30).</b> El problema tiene tres dimensiones. <b>Fragmentación</b>: aun con sistemas informatizados, los datos viven en silos con formatos y accesos distintos; no se integran fácilmente. En Argentina, el proyecto HSI ya conectó a más de 2 millones de pacientes en 16 provincias con historia clínica federada —un avance concreto, pero aún la excepción—; la mayoría sigue dependiendo de documentos no interoperables. <b>Portabilidad no verificable</b>: el paciente suele tener PDFs o capturas <em>sin firma</em>, por lo que un tercero no puede comprobar automáticamente el origen ni la integridad; la validación sigue siendo manual —cualquier imagen puede falsificarse—. <b>Comprensión</b>: los códigos <em>CVX</em> (vacunas CDC), <em>LOINC</em> (laboratorio NLM) e <em>ICD-10</em> (diagnósticos) son esenciales para la interoperabilidad pero opacos para personas sin herramientas de apoyo. La respuesta son los <b>estándares abiertos</b>: representar el dato, transportarlo y <b>verificarlo criptográficamente</b>, manteniendo independencia entre quien emite y quien verifica, sin centralizar datos en un intermediario.`,
 /*3*/`<b>(≈2 min).</b> Nos propusimos cubrir el flujo completo: <b>emitir</b> credenciales verificables a partir de recursos FHIR, <b>publicarlas</b> de forma segura con SHL, <b>verificarlas</b> desde una app móvil independiente y <b>visualizar</b> los datos de manera comprensible. Sumamos una <b>capa de IA opcional</b>. La idea central —y esto es clave para la defensa— es que <b>emisor y verificador no son la misma organización</b>: el emisor firma con su clave privada y publica su clave pública; cualquier verificador valida solo, aplicando sus políticas de confianza. El alcance clínico fueron tres recursos: <em>Patient, Immunization y Observation de laboratorio</em>.`,
 /*4*/`<b>(≈2:30).</b> Cuatro piezas complementarias. <b>FHIR R4</b> (HL7, finalizado 2018) representa el dato clínico de forma estructurada sobre REST/JSON. Hoy es el estándar dominante global: el 71% de países lo usan activamente, el 78% de países con regulación de datos de salud lo obligan o recomiendan, y más del 90% de hospitales en EE.UU. ya lo adoptaron. <b>SMART Health Cards</b> toma ese bundle y lo firma como JWS ES256: convirtió el certificado de vacunación COVID-19 en un QR verificable —fue adoptado como estándar de facto en EE.UU., todas las provincias de Canadá, Japón y otros países—. No solo digitaliza: permite <b>comprobar</b> autenticidad e integridad matemáticamente. <b>SMART Health Links</b> resuelve el límite físico del QR —unos 1.200 caracteres— convirtiéndolo en un <b>puntero seguro</b> a contenido remoto cifrado; agrega expiración, passcode y revocación. <b>MCP</b> (Anthropic, 2024) permite que un modelo descubra e invoque herramientas en runtime sin reentrenamiento. Lo importante: la IA se apoya en MCP <b>sin tocar la cadena de confianza criptográfica</b>.`,
 /*5*/`<b>(≈2 min).</b> Trabajamos con una metodología <b>ágil híbrida</b>. Kanban en GitHub Projects, historias de usuario con criterios de aceptación y una <b>Definition of Done</b> común que exigía implementación, validación, Pull Request, ausencia de secretos en el código y documentación mínima. El control de versiones fue por <b>ramas y PRs</b>. Automatizamos con <b>GitHub Actions</b> para tests, <b>Expo</b> para builds del APK y <b>Langfuse</b> para trazar la IA. Lo más relevante: construimos <b>por capas incrementales</b> —primero generar, después publicar, luego verificar y por último interpretar— validando cada etapa antes de avanzar, en lugar de integrar todo al final.`,
@@ -536,7 +540,7 @@ const notes=[
 /*11*/`<b>(≈3 min). Diagrama de la IA.</b> Dos componentes. <b>nexo-mcp</b>: servidor Python con FastMCP que expone <b>7 herramientas</b> —OpenFDA (reacciones adversas FDA), RxNorm/RxTerms (NLM), traducir_codigo_loinc (NLM ClinicalTables), consultar_loinc_fhir (HL7 tx.fhir.org con propiedades clínicas completas), ICD-10, buscar_medicamento, buscar_vacuna_cvx—; corre como <b>subproceso por stdio</b>, sin puerto HTTP, sin superficie de red expuesta. <b>nexo-bff-ai</b>: Express/TS con Vercel AI SDK, el único que habla con el LLM — centraliza autenticación y secretos. Soporta <b>cuatro providers</b>: Groq/llama-3.3-70b (default), GPT-4o, Claude-3.5-sonnet, Gemini. El móvil nunca toca el LLM. Detalle técnico: se usan <b>dos modelos distintos por fase</b>. En <b>Fase 1</b> (enrutamiento/tool-calling), un modelo más liviano (llama-3.3-70b, gpt-4o-mini, claude-haiku, gemini-flash) recibe el recurso FHIR con sus códigos y la lista de tools y decide cuáles invocar y con qué argumentos — el BFF ejecuta esas llamadas contra el MCP. En <b>Fase 2</b> (redacción clínica), un modelo más capaz recibe el FHIR <b>sin identificadores del paciente</b> y los resultados verificados de las APIs y redacta exactamente <b>dos párrafos en español</b>. El system prompt le prohíbe usar conocimiento propio fuera de las fuentes.`,
 /*12*/`<b>(≈2 min).</b> Para que la IA sea confiable y trazable. <b>Grounding Judge</b> (LLM-as-a-Judge): evalúa de forma <b>asíncrona</b> si cada párrafo del análisis está respaldado por las fuentes retornadas por el MCP — score binario (1/0), sin sumar latencia al usuario. <b>Langfuse</b>: trazas jerárquicas con spans por fase (enrutamiento → tool calls → redacción → judge), scores del juez y feedback humano; el campo <em>subject</em> del recurso FHIR se remueve antes de registrar para no exponer al paciente. <b>Feedback de usuario</b>: el endpoint <em>POST /api/score</em> recibe score (1 = 👍, 0 = 👎) y lo envía a Langfuse — permite identificar patrones de respuestas insatisfactorias sin reentrenamiento. Refinamos iterativamente con datos reales: alucinaciones, menciones no pedidas de ausencia de datos, falsos negativos del juez y análisis penalizados por mezcla de idiomas fueron identificados y corregidos en el system prompt. El límite es explícito: la IA <b>no valida criptográficamente, no decide validez y no reemplaza el criterio profesional</b>; solo complementa la interpretación, siempre después de la verificación criptográfica.`,
 /*13*/`<b>(≈2 min).</b> Validamos en tres niveles. <b>Unitarias</b> con Jest sobre el Issuer —generación de SHC/SHL y transformación FHIR— integradas a CI con GitHub Actions. <b>Independiente</b>: las SHC se validaron con herramientas de referencia de <em>SMART Health IT</em>, y el Verifier se probó con QR generados por terceros, demostrando <b>interoperabilidad real</b>, no solo con nuestro propio emisor. <b>End-to-end</b>: flujo completo con <b>Synthea + HAPI FHIR</b> y un portal simulado, incluyendo casos límite —bloqueo por passcode, revocación idempotente y detección de firmas alteradas—. La prueba con usuarios reales del <b>Garrahan</b> no se concretó por madurez del entorno y queda como futuro; por eso trabajamos con datos sintéticos.`,
-/*14*/`<b>DEMO (≈9 min).</b> Mostramos el recorrido completo. <b>1)</b> En el <b>portal</b>, el paciente elige los recursos (vacunas / laboratorio) y si requiere passcode; <b>2)</b> el Issuer emite y devuelve el <b>QR</b> (que se puede descargar o enviar por mail). <b>3)</b> En la app, <b>escaneamos</b> el QR; <b>4)</b> se resuelve el SHL y se baja el manifiesto; <b>5)</b> se <b>descifra</b> localmente; <b>6)</b> se <b>valida la firma</b> contra el JWKS y aparece el estado de verificación; <b>7)</b> se ven los <b>datos clínicos</b> con la terminología resuelta; <b>8)</b> opcionalmente pedimos el <b>análisis de IA</b>. Si hay tiempo, mostramos también casos de error: un <b>QR con firma alterada</b> (signature_invalid) y el <b>bloqueo por passcode</b>. <em>Plan B si falla la red: tenemos capturas y un video de respaldo.</em>`,
+/*14*/`<b>DEMO (≈9 min).</b> Mostramos el recorrido completo. <b>1)</b> En el <b>portal</b>, el paciente elige los recursos (vacunas / laboratorio) y si requiere passcode; <b>2)</b> el Issuer emite y devuelve el <b>QR</b> (que se puede descargar o enviar por mail). <b>3)</b> En la app, <b>escaneamos</b> el QR; <b>4)</b> se resuelve el SHL y se baja el manifiesto; <b>5)</b> se <b>descifra</b> localmente; <b>6)</b> se <b>valida la firma</b> contra el JWKS y aparece el estado de verificación; <b>7)</b> se ven los <b>datos clínicos</b> con la terminología resuelta; <b>8)</b> opcionalmente pedimos el <b>análisis de IA</b>. Si hay tiempo, mostramos también casos de error: un <b>QR con firma alterada</b> (success_signature_invalid) y el <b>bloqueo por passcode</b>. <em>Plan B si falla la red: tenemos capturas y un video de respaldo.</em>`,
 /*15*/`<b>(≈3 min).</b> Riesgos que se materializaron. <b>SHC-en-QR vs SHL</b>: la decisión no fue trivial; elegimos <b>SHL</b> por capacidad y por alinearnos con el estándar, asumiendo más complejidad (manifiestos, claves, modos). <b>Infra y seguridad</b>: tuvimos que definir qué se expone y cómo —resuelto con HTTPS, API keys, VPC privada y separación público/interno—. <b>IA y MCP</b>: no bastaba conectar un modelo; hubo que lograr buen tool-calling y evitar alucinaciones, lo que nos llevó a acotar el rol de la IA y sumar el Grounding Judge. Y el más importante para el alcance: la <b>integración con Garrahan</b> no era viable aún (solo recursos Patient, portal no operativo), así que ajustamos a <b>entornos controlados</b> sin cambiar la arquitectura. Lección transversal: <b>los estándares hay que respetarlos al detalle</b> o la credencial deja de ser verificable afuera.`,
 /*16*/`<b>(≈2:30).</b> Conclusiones: demostramos la <b>viabilidad técnica</b> extremo a extremo de credenciales interoperables, portables y verificables; que FHIR + SHC + SHL se articulan <b>sin acoplar</b> emisor y verificador; el valor de <b>separar confianza de interpretación</b>; y que la seguridad es <b>transversal</b>. El aporte central es una <b>arquitectura funcional documentada</b> que integra estándares consolidados con tecnologías emergentes preservando trazabilidad e independencia. Hacia adelante: integración con <b>infraestructura institucional real</b>, más <b>recursos FHIR</b>, un <b>marco de confianza</b> (listas, rotación de claves, auditoría), <b>validación con usuarios</b> y evolución de la IA.`,
 /*17*/`<b>Cierre (≈30 s).</b> En síntesis, Nēxo integra <b>estándares abiertos, seguridad criptográfica, verificación móvil e interpretación asistida</b> en un mismo ecosistema. Muchas gracias por su atención; quedamos a disposición para sus <b>preguntas</b>.`
@@ -566,6 +570,11 @@ function toggleTimer(){
   if(tInt){clearInterval(tInt);tInt=null;acc+=Date.now()-t0;}
   else{t0=Date.now();tInt=setInterval(()=>{document.getElementById('timer').textContent=fmt(acc+Date.now()-t0)},250);}
 }
+function resetTimer(){
+  if(tInt){clearInterval(tInt);tInt=null;}
+  acc=0;t0=null;
+  document.getElementById('timer').textContent='00:00';
+}
 /* fullscreen */
 function fs(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
 /* overview */
@@ -577,6 +586,53 @@ function buildOverview(){
 }
 function jump(k){toggleOverview();show(k)}
 
+/* PDF export */
+async function downloadPdf(){
+  if(!window.html2canvas||!window.jspdf){alert('Librerías de PDF no disponibles. Verificá la conexión a internet.');return;}
+  const {jsPDF}=window.jspdf;
+  // Overlay para ocultar cambios visuales durante la captura
+  const ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:#06121d;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cfe0e6;font-family:JetBrains Mono,monospace;gap:14px';
+  ov.innerHTML='<div style="font-size:15px">Generando PDF…</div><div id="pdf-prog" style="font-size:13px;color:#8fb0b8">diapositiva 0 / '+TOTAL+'</div><div style="width:260px;height:3px;background:#1d3a4a;border-radius:2px"><div id="pdf-bar" style="height:100%;background:linear-gradient(90deg,#0E7C86,#2FA6BA);width:0;transition:width .2s;border-radius:2px"></div></div>';
+  document.body.appendChild(ov);
+  // Deshabilitar animaciones de transición durante captura
+  const noAnim=document.createElement('style');
+  noAnim.textContent='.slide.active{animation:none!important}';
+  document.head.appendChild(noAnim);
+  const savedI=i, notesWasOpen=notesOpen;
+  if(notesOpen)toggleNotes();
+  const stage=document.getElementById('stage');
+  const origT=stage.style.transform, origTO=stage.style.transformOrigin;
+  stage.style.transform='scale(1)';
+  stage.style.transformOrigin='top left';
+  await new Promise(r=>setTimeout(r,60));
+  // A4 apaisado · 297×210mm · contenido 16:9 centrado verticalmente
+  const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+  const ih=pw*720/1280, iy=(ph-ih)/2;
+  const prog=document.getElementById('pdf-prog'), bar=document.getElementById('pdf-bar');
+  for(let k=0;k<TOTAL;k++){
+    show(k);
+    if(prog) prog.textContent='diapositiva '+(k+1)+' / '+TOTAL;
+    if(bar) bar.style.width=(((k+1)/TOTAL)*100)+'%';
+    await new Promise(r=>setTimeout(r,400));
+    const c=await html2canvas(stage,{scale:1,useCORS:true,allowTaint:true,logging:false,backgroundColor:'#F4F7F9',width:1280,height:720});
+    if(k>0)pdf.addPage('a4','landscape');
+    pdf.setFillColor(255,255,255);
+    pdf.rect(0,0,pw,ph,'F');
+    pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,iy,pw,ih);
+  }
+  // Restaurar estado
+  stage.style.transform=origT;
+  stage.style.transformOrigin=origTO;
+  noAnim.remove();
+  show(savedI);
+  if(notesWasOpen)toggleNotes();
+  resize();
+  ov.remove();
+  pdf.save('nexo-defensa.pdf');
+}
+
 /* keyboard */
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
@@ -584,6 +640,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(TOTAL-1)}
   else if(e.key.toLowerCase()==='n'){toggleNotes()}
   else if(e.key.toLowerCase()==='t'){toggleTimer()}
+  else if(e.key.toLowerCase()==='r'){resetTimer()}
   else if(e.key.toLowerCase()==='f'){fs()}
   else if(e.key.toLowerCase()==='o'){toggleOverview()}
   else if(e.key==='Escape'&&ovOpen){toggleOverview()}
