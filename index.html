@@ -48,19 +48,19 @@ body{
 @media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
 
 /* eyebrow / numbering encodes the shlink scheme */
-.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--teal);
+.eyebrow{font-family:var(--mono);font-size:16px;letter-spacing:.04em;color:var(--teal);
   display:flex;align-items:center;gap:14px;margin-bottom:18px;}
 .eyebrow .seg{color:var(--muted)}
 .eyebrow .num{color:var(--ink);font-weight:600}
 .eyebrow .bar{flex:1;height:1px;background:var(--line)}
 
 h1.title{font-family:var(--disp);font-weight:600;line-height:1.04;color:var(--ink);
-  font-size:40px;letter-spacing:-.01em;margin-bottom:8px}
-h2.lead{font-family:var(--disp);font-weight:500;font-size:17px;color:var(--teal);margin-bottom:22px}
-p.intro{font-size:17px;line-height:1.5;color:var(--ink2);max-width:62ch}
+  font-size:45px;letter-spacing:-.01em;margin-bottom:20px}
+h2.lead{font-family:var(--disp);font-weight:500;font-size:21px;color:var(--teal);margin-bottom:22px}
+p.intro{font-size:21px;line-height:1.5;color:var(--ink2);max-width:62ch;margin-bottom:14px}
 
 ul.points{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:6px}
-ul.points li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:var(--ink2);max-width:64ch}
+ul.points li{position:relative;padding-left:30px;font-size:21px;line-height:1.45;color:var(--ink2);max-width:64ch}
 ul.points li::before{content:"";position:absolute;left:4px;top:9px;width:9px;height:9px;
   background:var(--teal);transform:rotate(45deg);border-radius:1px}
 ul.points li b{color:var(--ink);font-weight:600}
@@ -71,14 +71,18 @@ ul.points li.v::before{background:var(--violet)}
 .kt{font-family:var(--mono);color:var(--teal);font-weight:600}
 
 .cols{display:flex;gap:34px;flex:1;min-height:0}
-.col{flex:1;display:flex;flex-direction:column}
+.col{flex:1;display:flex;flex-direction:column;justify-content:center}
 .col.narrow{flex:.78}
 
 .cardgrid{display:grid;gap:14px;margin-top:4px}
-.card{background:var(--paper2);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.card h3{font-family:var(--disp);font-size:15px;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.card p{font-size:14px;line-height:1.42;color:var(--muted)}
+.card{background:var(--paper2);border:1px solid var(--line);border-radius:12px;padding:24px 26px}
+.card h3{font-family:var(--disp);font-size:24px;color:var(--ink);margin-bottom:25px;display:flex;align-items:center;gap:8px}
+.card p{font-size:21px;line-height:1.55;color:var(--muted)}
 .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+.card-danger{background:#fdf3f2;border:1.5px solid #f0cece;}
+.card-success{background:#ecf7f2;border:1.5px solid #b0dbc6;}
+.card-label{font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:.04em;margin-bottom:12px;}
 
 /* tables */
 table.t{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
@@ -99,7 +103,7 @@ table.t tr:last-child td{border-bottom:none}
 .chip b{color:var(--teal)}
 
 /* figure caption */
-.cap{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+.cap{font-family:var(--mono);font-size:17px;color:var(--muted);margin-top:8px;text-align:center}
 
 svg.diagram{width:100%;height:100%;display:block}
 .diawrap{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
@@ -109,13 +113,13 @@ svg.diagram{width:100%;height:100%;display:block}
 .coverwrap{position:absolute;inset:0;display:flex}
 .coverL{flex:1.25;padding:70px 64px;display:flex;flex-direction:column;justify-content:space-between;z-index:2}
 .coverR{flex:1;position:relative;overflow:hidden}
-.brandmark{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.18em;color:var(--cyan);display:flex;align-items:center;gap:12px}
+.brandmark{font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:.06em;color:var(--cyan);display:flex;align-items:center;gap:12px;}
 .cov-title{font-family:var(--disp);font-weight:600;font-size:62px;line-height:.98;letter-spacing:-.02em;color:#fff}
 .cov-title .macron{color:var(--cyan)}
-.cov-sub{font-size:19px;line-height:1.42;color:#c7d8de;max-width:30ch;margin-top:18px;font-weight:400}
-.cov-meta{display:flex;gap:46px;font-size:14px}
-.cov-meta .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--cyan);text-transform:uppercase;margin-bottom:7px}
-.cov-meta .val{color:#e7eff2;line-height:1.55}
+.cov-sub{font-size:22px;line-height:1.42;color:#c7d8de;max-width:40ch;margin-top:18px;font-weight:400}
+.cov-meta{display:flex;gap:46px;font-size:18px}
+.cov-meta .lbl{font-family:var(--mono);font-size:20px;letter-spacing:.05em;color:var(--cyan);text-transform:uppercase;margin-bottom:7px}
+.cov-meta .val{color:#e7eff2;line-height:1.55;font-size:19px}
 .cov-foot{font-family:var(--mono);font-size:12px;color:#8fb0b8;letter-spacing:.03em}
 
 /* progress + chrome */
@@ -165,7 +169,7 @@ svg.diagram{width:100%;height:100%;display:block}
 <section class="slide active" id="s0">
   <div class="coverwrap">
     <div class="coverL">
-      <div class="brandmark"><span>◆</span> FIUBA · TRABAJO PROFESIONAL · INGENIERÍA EN INFORMÁTICA</div>
+      <div class="brandmark"><span>◆</span> FIUBA · 2026 · TRABAJO PROFESIONAL · INGENIERÍA EN INFORMÁTICA</div>
       <div>
         <div class="cov-title">N<span class="macron">ē</span>xo</div>
         <div class="cov-sub">Ecosistema de credenciales sanitarias digitales interoperables basado en SMART Health Links, SMART Health Cards y HL7&nbsp;FHIR</div>
@@ -180,7 +184,7 @@ svg.diagram{width:100%;height:100%;display:block}
           <div class="val">Lic. Gustavo Carolo<br><span style="color:#9fc0c8">Hospital Garrahan</span></div>
         </div>
       </div>
-      <div class="cov-foot">defensa · 2026 &nbsp;·&nbsp; estándares abiertos · verificación criptográfica · mobile health</div>
+      <div class="cov-foot"></div>
     </div>
     <div class="coverR" id="coverArt"></div>
   </div>
@@ -192,7 +196,7 @@ svg.diagram{width:100%;height:100%;display:block}
   <h1 class="title">Recorrido de la presentación</h1>
   <div class="cols" style="margin-top:14px">
     <div class="col">
-      <ul class="points" style="gap:11px">
+      <ul class="points" style="gap:35px">
         <li>Problema · contexto sanitario</li>
         <li>Objetivo · alcance</li>
         <li>Estándares · fundamentos</li>
@@ -202,7 +206,7 @@ svg.diagram{width:100%;height:100%;display:block}
       </ul>
     </div>
     <div class="col">
-      <ul class="points" style="gap:11px">
+      <ul class="points" style="gap:35px">
         <li>Nēxo Verifier</li>
         <li>Capa de IA · BFF + MCP</li>
         <li>Validación</li>
@@ -214,28 +218,34 @@ svg.diagram{width:100%;height:100%;display:block}
   </div>
 </section>
 
-<!-- ============ 2 · PROBLEMA ============ -->
+<!-- ============ 2a · PROBLEMA ============ -->
 <section class="slide" id="s2">
   <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">02</span><span class="seg">·26</span> <span>Problema y contexto</span><span class="bar"></span></div>
   <h1 class="title">Compartir información clínica sigue siendo difícil</h1>
-  <h2 class="lead">Fragmentación · portabilidad no verificable · datos poco comprensibles</h2>
-  <div class="cardgrid" style="grid-template-columns:repeat(3,1fr)">
+  <!--<h2 class="lead">Fragmentación · portabilidad no verificable · datos poco comprensibles</h2>-->
+  <div class="cardgrid" style="grid-template-columns:repeat(3,1fr);flex:1;align-content:center">
     <div class="card"><h3><span class="dot" style="background:var(--danger)"></span>Fragmentación</h3>
-      <p>Los datos viven en sistemas, portales y laboratorios con modelos y accesos distintos. El paciente lleva PDFs, repite estudios y re-explica síntomas en cada nueva consulta. En Argentina, más de <b>2 M de pacientes</b> ya tienen historia clínica federada en HSI — aún una excepción.</p></div>
+      <p>El paciente lleva PDFs, repite estudios y re-explica síntomas. En Argentina, más de <b>2 M de pacientes</b> tienen historia clínica federada en HSI — aún la excepción.</p></div>
     <div class="card"><h3><span class="dot" style="background:var(--warn)"></span>Sin verificación</h3>
-      <p>Documentos sin firma criptográfica: un tercero no puede comprobar de forma automática quién los emitió ni si fueron alterados. La validación sigue siendo <b>manual y basada en confianza institucional</b>, no matemática. Cualquier imagen puede falsificarse.</p></div>
+      <p>Sin firma criptográfica, cualquier imagen puede falsificarse. La validación sigue siendo <b>manual y basada en confianza institucional</b>.</p></div>
     <div class="card"><h3><span class="dot" style="background:var(--teal)"></span>Poco comprensibles</h3>
-      <p>Vocabularios como <span class="k">CVX</span> (vacunas CDC), <span class="k">LOINC</span> (laboratorio) o <span class="k">ICD-10</span> (diagnósticos) son esenciales para la interoperabilidad pero resultan opacos para pacientes y verificadores no técnicos sin herramientas de apoyo.</p></div>
+      <p>Códigos como <span class="k">CVX</span>, <span class="k">LOINC</span> e <span class="k">ICD-10</span> son esenciales para la interoperabilidad pero opacos para pacientes y verificadores sin herramientas de apoyo.</p></div>
   </div>
-  <p class="intro" style="margin-top:18px">Los <b>estándares abiertos</b> de salud digital ofrecen una alternativa concreta: representar, transportar y <b>verificar criptográficamente</b> información clínica sin acoplar emisor y verificador, ni centralizar datos en un intermediario.</p>
-  <div style="display:flex;gap:14px;margin-top:auto">
-    <div style="flex:1;border:1.5px solid #f0cece;background:#fdf3f2;border-radius:10px;padding:14px 18px">
-      <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--danger);margin-bottom:8px;letter-spacing:.04em">✗ HOY · sin estándares</div>
-      <p style="font-size:14px;color:var(--ink2);line-height:1.48">Documento sin firma: PDF, imagen, papel. Un tercero no puede confirmar automáticamente quién lo emitió ni si fue alterado. <b>La validación es manual y se basa en confianza institucional, no matemática.</b> Cualquier imagen puede falsificarse.</p>
+</section>
+
+<!-- ============ 2b · PROBLEMA · SOLUCIÓN ============ -->
+<section class="slide" id="s2b">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">02</span><span class="seg">·26</span> <span>Problema y contexto</span><span class="bar"></span></div>
+  <h1 class="title">La respuesta: estándares abiertos</h1>
+  <p class="intro" style="margin-top:8px"><span style="color:var(--teal);font-size:16px">◆</span> Representar, transportar y <b>verificar criptográficamente</b> información clínica sin acoplar emisor y verificador, ni centralizar datos en un intermediario.</p>
+  <div class="cols" style="margin-top:22px;align-items:center">
+    <div class="card card-danger">
+      <div class="card-label" style="color:var(--danger)">✗ HOY · sin estándares</div>
+      <p>Documento sin firma: PDF, imagen, papel. Un tercero no puede confirmar automáticamente quién lo emitió ni si fue alterado. <b>La validación es manual y se basa en confianza institucional, no matemática.</b> Cualquier imagen puede falsificarse.</p>
     </div>
-    <div style="flex:1;border:1.5px solid #b0dbc6;background:#ecf7f2;border-radius:10px;padding:14px 18px">
-      <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green);margin-bottom:8px;letter-spacing:.04em">✓ NĒXO · FHIR + SHC + SHL</div>
-      <p style="font-size:14px;color:var(--ink2);line-height:1.48">Recurso estructurado, firmado <span class="k">ES256</span> y cifrado <span class="k">AES-256-GCM</span>. Verificable matemáticamente por cualquier tercero, portable en un QR, comprensible con terminología resuelta. <b>Sin intermediarios ni acoplamientos entre emisor y verificador.</b></p>
+    <div class="card card-success">
+      <div class="card-label" style="color:var(--green)">✓ NĒXO · FHIR + SHC + SHL</div>
+      <p>Recurso estructurado, firmado y cifrado. Verificable matemáticamente por cualquier tercero, portable en un QR, comprensible con terminología resuelta. <b>Sin intermediarios ni acoplamientos entre emisor y verificador.</b></p>
     </div>
   </div>
 </section>
@@ -246,7 +256,7 @@ svg.diagram{width:100%;height:100%;display:block}
   <h1 class="title">Emitir, publicar, verificar y entender</h1>
   <div class="cols">
     <div class="col">
-      <ul class="points">
+      <ul class="points"style="gap:25px">
         <li><b>Emisión</b> de credenciales verificables a partir de recursos <span class="k">HL7 FHIR R4</span></li>
         <li><b>Publicación</b> segura mediante <span class="kt">SMART Health Links</span></li>
         <li><b>Verificación móvil</b> independiente del emisor</li>
@@ -256,28 +266,30 @@ svg.diagram{width:100%;height:100%;display:block}
     </div>
     <div class="col narrow">
       <div class="card" style="background:#0B1B2B;color:#eaf2f5;border:none;height:100%;display:flex;flex-direction:column;justify-content:center">
-        <h3 style="color:#fff;font-size:16px">Idea central</h3>
-        <p style="color:#c7d8de;font-size:15px;line-height:1.5;margin-top:8px">
+        <h3 style="color:#fff;font-size:24px">Idea central</h3>
+        <p style="color:#c7d8de;font-size:21px;line-height:1.5;margin-top:8px">
           El emisor y el verificador <b style="color:var(--cyan)">no pertenecen a la misma organización</b>. Una institución firma con su clave privada y publica la clave pública; cualquier verificador confiable valida la credencial de forma autónoma.</p>
       </div>
     </div>
   </div>
+  <!--
   <div class="chips">
-    <span class="chip">recursos · <b>Patient</b></span><span class="chip">· <b>Immunization</b></span><span class="chip">· <b>Observation</b> (Laboratory)</span>
+    <span class="chip">· <b>Patient</b></span><span class="chip">· <b>Immunization</b></span><span class="chip">· <b>Observation</b> (Laboratory result)</span>
   </div>
+  -->
 </section>
 
 <!-- ============ 4 · ESTÁNDARES ============ -->
 <section class="slide" id="s4">
   <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">04</span><span class="seg">·26</span> <span>Fundamentos</span><span class="bar"></span></div>
   <h1 class="title">Cuatro piezas que se complementan</h1>
-  <div class="cardgrid" style="grid-template-columns:repeat(4,1fr);margin-top:10px">
-    <div class="card"><h3 style="color:var(--teal)">FHIR R4</h3><p>Recursos clínicos (<span class="k">Patient</span>, <span class="k">Immunization</span>, <span class="k">Observation</span>…) sobre REST/JSON. Finalized 2018, es hoy el estándar dominante: <b>71% de países lo usan activamente</b> y más del 90% de hospitales en EE.UU. lo adoptaron.</p></div>
-    <div class="card"><h3 style="color:var(--cyan)">SMART Health Cards</h3><p>Bundle FHIR firmado <span class="k">JWS/ES256</span> y comprimido en un QR. Nació para vacunación COVID-19 y fue adoptado como <b>estándar de facto</b> en EE.UU., Canadá (todas las provincias), Japón y otros países. Portable, verificable sin conexión.</p></div>
-    <div class="card"><h3 style="color:var(--amber)">SMART Health Links</h3><p>El QR se convierte en un <b>puntero seguro</b> a contenido cifrado en la nube. Supera el límite físico de ≈1 200 caracteres del QR; agrega expiración, passcode y revocación. Permite compartir conjuntos de credenciales de cualquier tamaño.</p></div>
-    <div class="card"><h3 style="color:var(--violet)">MCP</h3><p>Model Context Protocol (Anthropic, 2024). Protocolo abierto que permite a un LLM <b>descubrir e invocar herramientas externas</b> en tiempo de ejecución sin reentrenar el modelo, conectando IA con APIs especializadas de forma estructurada.</p></div>
+  <div class="cardgrid" style="grid-template-columns:repeat(4,1fr);margin:auto 0">
+    <div class="card"><h3 style="color:var(--teal)">FHIR R4</h3><p>Recursos clínicos sobre REST/JSON. Estándar dominante global: <b>71% de países</b> lo usan activamente y más del <b>90% de hospitales en EE.UU.</b> lo adoptaron.</p></div>
+    <div class="card"><h3 style="color:var(--cyan)">SMART Health Cards</h3><p>Bundle FHIR firmado <span class="k">JWS/ES256</span> comprimido en un QR. Adoptado como <b>estándar de facto</b> en EE.UU., Canadá y Japón. Portable y <b>verificable sin conexión</b>.</p></div>
+    <div class="card"><h3 style="color:var(--amber)">SMART Health Links</h3><p>El QR se convierte en un <b>puntero seguro</b> a contenido cifrado en la nube. Supera el límite físico del QR y agrega expiración, passcode y revocación.</p></div>
+    <div class="card"><h3 style="color:var(--violet)">MCP</h3><p>Model Context Protocol (Anthropic, 2024). Permite a un LLM <b>descubrir e invocar herramientas externas</b> en tiempo de ejecución sin reentrenar el modelo.</p></div>
   </div>
-  <p class="intro" style="margin-top:18px"><b>FHIR</b> resuelve la representación; <b>SHC</b> la verificabilidad criptográfica; <b>SHL</b> la capacidad y distribución segura; y <b>MCP</b> habilita interpretación asistida <b>sin modificar la cadena de confianza</b> ni exponer datos al LLM directamente.</p>
+  <!--<p class="intro" style="margin-top:18px"><b>FHIR</b> resuelve la representación; <b>SHC</b> la verificabilidad criptográfica; <b>SHL</b> la capacidad y distribución segura; y <b>MCP</b> habilita interpretación asistida <b>sin modificar la cadena de confianza</b> ni exponer datos al LLM directamente.</p>-->
 </section>
 
 <!-- ============ 5 · METODOLOGÍA ============ -->
@@ -286,23 +298,23 @@ svg.diagram{width:100%;height:100%;display:block}
   <h1 class="title">Ágil híbrida, entregas incrementales</h1>
   <div class="cols">
     <div class="col">
-      <ul class="points">
+      <ul class="points" style="gap:25px">
         <li><b>Kanban</b> en GitHub Projects · historias de usuario con criterios de aceptación</li>
-        <li><b>Definition of Done</b> común: implementación, validación, PR, sin secretos, doc mínima</li>
+        <li><b>Definition of Done</b> común: implementación, validación, PR, sin secretos, documentación mínima</li>
         <li>Ramas por funcionalidad · <b>Pull Requests</b> antes de integrar</li>
         <li>Automatización: <b>GitHub Actions</b> (tests), <b>Expo</b> (builds/APK), <b>Langfuse</b> (trazas IA)</li>
       </ul>
     </div>
     <div class="col narrow">
-      <div class="card" style="height:100%">
+      <div class="card">
         <h3>Construcción por capas</h3>
         <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
-          <div style="font-family:var(--mono);font-size:13px;color:var(--ink2)"><span style="color:var(--teal)">1 ▸</span> Generación de credenciales</div>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--ink2)"><span style="color:var(--teal)">2 ▸</span> Publicación segura (SHL)</div>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--ink2)"><span style="color:var(--teal)">3 ▸</span> Verificación móvil</div>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--ink2)"><span style="color:var(--violet)">4 ▸</span> Interpretación asistida (IA)</div>
+          <div style="font-family:var(--mono);font-size:21px;color:var(--ink2)"><span style="color:var(--teal)">1 ▸</span> Generación de credenciales</div>
+          <div style="font-family:var(--mono);font-size:21px;color:var(--ink2)"><span style="color:var(--teal)">2 ▸</span> Publicación segura (SHL)</div>
+          <div style="font-family:var(--mono);font-size:21px;color:var(--ink2)"><span style="color:var(--teal)">3 ▸</span> Verificación móvil</div>
+          <div style="font-family:var(--mono);font-size:21px;color:var(--ink2)"><span style="color:var(--violet)">4 ▸</span> Interpretación asistida (IA)</div>
         </div>
-        <p style="margin-top:14px">Cada incremento se validó antes de avanzar, evitando una única integración final.</p>
+        <p style="margin-top:60px">Cada incremento se validó antes de avanzar, evitando una única integración final.</p>
       </div>
     </div>
   </div>
@@ -975,44 +987,56 @@ const C={ink:'#0B1B2B',ink2:'#13293D',line:'#C7D2DA',muted:'#5C6B77',teal:'#0E7C
 function box(x,y,w,h,label,sub,color,fill){
   fill=fill||'#FFFFFF';
   return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="11" fill="${fill}" stroke="${color}" stroke-width="2"/>
-  <text x="${x+w/2}" y="${y+(sub?h/2-4:h/2+5)}" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="15" font-weight="600" fill="${C.ink}">${label}</text>
-  ${sub?`<text x="${x+w/2}" y="${y+h/2+15}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="${C.muted}">${sub}</text>`:''}</g>`;
+  <text x="${x+w/2}" y="${y+(sub?h/2-4:h/2+5)}" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="19" font-weight="600" fill="${C.ink}">${label}</text>
+  ${sub?`<text x="${x+w/2}" y="${y+h/2+16}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="${C.muted}">${sub}</text>`:''}</g>`;
+}
+function boxDashed(x,y,w,h,label,color,fill){
+  fill=fill||'#FFFDF0';
+  return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="11" fill="${fill}" stroke="${color}" stroke-width="2" stroke-dasharray="6 3"/>
+  <text x="${x+w/2}" y="${y+h/2+6}" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="18" font-weight="600" fill="${C.ink}">${label}</text></g>`;
 }
 function arrow(x1,y1,x2,y2,color,lbl,dash){
   const mx=(x1+x2)/2, my=(y1+y2)/2;
   return `<g><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2" ${dash?'stroke-dasharray="5 4"':''} marker-end="url(#ah-${color.replace('#','')})"/>
-  ${lbl?`<rect x="${mx-lbl.length*3.1-4}" y="${my-9}" width="${lbl.length*6.2+8}" height="16" rx="4" fill="#F4F7F9"/><text x="${mx}" y="${my+3}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="${C.muted}">${lbl}</text>`:''}</g>`;
+  ${lbl?`<rect x="${mx-lbl.length*3.8-4}" y="${my-10}" width="${lbl.length*7.6+8}" height="18" rx="4" fill="#F4F7F9"/><text x="${mx}" y="${my+4}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="${C.muted}">${lbl}</text>`:''}</g>`;
+}
+function curve(x1,y1,x2,y2,color,lbl,dash,cy=-60){
+  const cx1=x1+(x2-x1)*0.25, cx2=x1+(x2-x1)*0.75;
+  const mx=(x1+x2)/2;
+  return `<g><path d="M${x1},${y1} C${cx1},${y1+cy} ${cx2},${y2+cy} ${x2},${y2}" stroke="${color}" stroke-width="2" fill="none" ${dash?'stroke-dasharray="5 4"':''} marker-end="url(#ah-${color.replace('#','')})"/>
+  ${lbl?`<rect x="${mx-lbl.length*3.8-4}" y="${y1+cy-4}" width="${lbl.length*7.6+8}" height="18" rx="4" fill="#F4F7F9"/><text x="${mx}" y="${y1+cy+10}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="${C.muted}">${lbl}</text>`:''}</g>`;
 }
 function defs(colors){return `<defs>${colors.map(c=>`<marker id="ah-${c.replace('#','')}" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="${c}"/></marker>`).join('')}</defs>`}
 
 /* Architecture */
-document.getElementById('dia-arch').innerHTML=`<svg class="diagram" viewBox="0 0 1140 420">
+document.getElementById('dia-arch').innerHTML=`<svg class="diagram" viewBox="0 0 1140 440">
 ${defs([C.teal,C.cyan,C.amber,C.violet,C.muted])}
-<rect x="8" y="8" width="250" height="404" rx="14" fill="#eef3f6"/><text x="133" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="${C.muted}">EMISIÓN</text>
-<rect x="900" y="8" width="232" height="404" rx="14" fill="#eef3f6"/><text x="1016" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="${C.muted}">VERIFICACIÓN</text>
-${box(28,60,210,56,'Portal pacientes','emite / revoca',C.teal)}
-${box(28,150,210,56,'Servidor FHIR','HAPI · Synthea',C.muted)}
-${box(330,95,200,70,'Nēxo Issuer','Node · Express',C.teal,'#e6f1f1')}
-${box(330,210,150,48,'AWS S3','JWE cifrados',C.amber)}
-${box(500,210,150,48,'PostgreSQL','sesiones SHL',C.muted)}
-${box(330,290,200,46,'JWKS','/.well-known',C.amber)}
-${box(600,95,190,70,'QR · shlink:/','puntero seguro',C.cyan,'#e7f4f6')}
-${box(925,95,182,70,'Nēxo Verifier','React Native',C.cyan,'#e7f4f6')}
-${box(925,210,182,46,'BFF + MCP','IA opcional',C.violet)}
-${box(925,290,182,46,'APIs salud','OpenFDA · NLM · HL7',C.muted)}
-${box(700,290,150,46,'Langfuse','trazas',C.violet)}
-${arrow(238,88,330,118,C.teal,'issue')}
-${arrow(238,178,330,140,C.muted,'FHIR')}
-${arrow(430,165,400,210,C.amber,'cifra')}
-${arrow(490,165,560,210,C.muted,'persiste')}
-${arrow(530,130,600,130,C.cyan,'QR')}
-${arrow(790,130,925,130,C.cyan,'escanea')}
-${arrow(925,150,540,250,C.teal,'manifiesto',true)}
-${arrow(1016,210,460,234,C.amber,'descarga JWE',true)}
-${arrow(990,165,430,300,C.amber,'JWKS',true)}
-${arrow(1016,165,1016,210,C.violet,'')}
-${arrow(925,233,850,300,C.muted,'',true)}
-${arrow(1016,256,1016,290,C.violet,'tools')}
+<rect x="8" y="8" width="250" height="424" rx="14" fill="#eef3f6"/>
+<text x="133" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="${C.muted}">EMISIÓN</text>
+<rect x="900" y="8" width="232" height="424" rx="14" fill="#eef3f6"/>
+<text x="1016" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="${C.muted}">VERIFICACIÓN</text>
+${box(28,70,210,60,'Portal pacientes','emite / revoca',C.teal)}
+${box(28,165,210,60,'Servidor FHIR','HAPI · Synthea',C.muted)}
+${box(320,110,210,70,'Nēxo Issuer','Node · Express',C.teal,'#e6f1f1')}
+${box(320,250,155,52,'PostgreSQL','sesiones SHL',C.muted)}
+${box(495,250,155,52,'AWS S3','JWE cifrados',C.amber)}
+${boxDashed(618,125,150,44,'QR · shlink:/',C.cyan,'#e7f4f6')}
+${box(920,110,192,70,'Nēxo Verifier','React Native',C.cyan,'#e7f4f6')}
+${box(920,230,192,50,'BFF + MCP','IA opcional',C.violet)}
+${box(920,325,192,50,'APIs salud','OpenFDA · NLM · HL7',C.muted)}
+${box(690,325,155,50,'Langfuse','trazas',C.muted)}
+${arrow(238,100,320,130,C.teal,'issue')}
+${arrow(238,195,320,150,C.muted,'FHIR')}
+${arrow(425,180,390,250,C.muted,'persiste')}
+${arrow(530,175,560,250,C.amber,'cifra')}
+${arrow(530,145,618,147,C.cyan,'QR')}
+${arrow(768,147,920,145,C.cyan,'escanea')}
+${curve(920,118,530,118,C.teal,'manifiesto',true,-60)}
+${curve(920,130,530,130,C.amber,'JWKS',true,-38)}
+${arrow(920,185,650,258,C.amber,'descarga JWE',true)}
+${arrow(1016,180,1016,230,C.violet,'consulta')}
+${arrow(920,255,845,340,C.muted,'monitorea',true)}
+${arrow(1016,280,1016,325,C.muted,'tools')}
 </svg>`;
 
 /* Issuer flow */
