@@ -527,132 +527,59 @@ svg.diagram{width:100%;height:100%;display:block}
 <!-- ============ 10 · VERIFIER FLUJO ============ -->
 <section class="slide" id="s9">
   <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">14</span><span class="seg">·26</span> <span>Nēxo Verifier</span><span class="bar"></span></div>
-  <h1 class="title">Del QR a los datos clínicos, en el dispositivo</h1>
-  <div class="diawrap" id="dia-verifier" style="flex:none;height:260px"></div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px">
-    <div class="card">
-      <h3><span class="dot" style="background:var(--cyan)"></span>La clave del QR → shlStore</h3>
-      <p>El payload <span class="k">shlink:/eyJ...</span> se decodifica en Base64URL → JSON: <span class="k">{ url, key, flag }</span>. La clave AES <b>no puede viajar como nav param</b>: Expo Router los serializa en el historial y pueden quedar en crash reporters. Va a <b>shlStore</b>: variable en memoria con patrón consume-once. <span class="k">consumePendingShl()</span> la lee y la borra en un solo paso.</p>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--teal)"></span>El manifiesto no existe hasta que se pide</h3>
-      <p>POST → el issuer valida la sesión → genera URLs prefirmadas de S3 (vida <span class="k">≤ 1h</span>) → responde:</p>
-      <div style="font-family:var(--mono);font-size:10.5px;background:#0d1f2d;padding:8px 10px;border-radius:6px;margin-top:7px;line-height:1.8;color:#c7d8de">
-        <span style="color:var(--amber)">{</span> <span style="color:var(--teal)">"files"</span>: [<span style="color:var(--amber)">{</span> <span style="color:var(--teal)">"contentType"</span>: <span style="color:#c7d8de">"application/smart-health-card"</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">"location"</span>: <span style="color:#90d4b4">"https://s3.amazonaws.com/…?X-Amz-Signature=…"</span> <span style="color:var(--amber)">}</span>] <span style="color:var(--amber)">}</span>
-      </div>
-      <p style="margin-top:7px;font-size:13px">Descarga cada JWE de S3 → descifra → <span class="k">{ verifiableCredential: [JWS, ...] }</span>. Cada JWS es una SHC.</p>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--amber)"></span>Descifrar ≠ confiar en el origen</h3>
-      <p>El descifrado AES-GCM exitoso garantiza integridad — pero <b>no prueba quién lo creó</b>. Cualquiera podría fabricar un JWE con datos falsos y cifrarlo con una clave AES inventada. La firma ES256 dentro del JWS es la que responde esa pregunta. Son dos operaciones <b>independientes</b>.</p>
-    </div>
+  <h1 class="title">Del QR a los datos clínicos</h1>
+  <div class="diawrap" id="dia-verifier" style="flex:1;min-height:0"></div>
+  <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap">
+    <span class="chip"><b>React Native</b> + Expo</span>
+    <span class="chip">Descifrado <b>local</b> · el dato nunca sale descifrado</span>
+    <span class="chip">Verificación <b>autónoma</b> · sin depender del issuer</span>
+    <span class="chip">scan → SHL → manifiesto → descifrar → verificar → mostrar</span>
   </div>
 </section>
 
-<!-- ============ 11 · VERIFIER PIPELINE CRIPTOGRÁFICO ============ -->
+<!-- ============ VERIFIER · SMART HEALTH LINK ============ -->
 <section class="slide" id="s9b">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">15</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; JWE decrypt</span><span class="bar"></span></div>
-  <h1 class="title">Paso 1: descifrar &mdash; recuperar el JWS del bundle</h1>
-  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
-    <div class="col">
-      <div class="card" style="height:100%">
-        <h3>El descifrado AES-256-GCM</h3>
-        <p style="margin-top:8px">La clave del QR + el IV de 12 bytes descifran el ciphertext. El <b>auth tag de 128 bits</b> verifica que nada fue alterado: se calcula sobre clave + IV + ciphertext + header. Si alguien modifico un solo byte en S3, en transito, donde sea, <span class="k">decipher.finish()</span> devuelve <span class="k">false</span>.</p>
-        <div style="margin-top:12px;font-family:var(--mono);font-size:12px;background:#0d1f2d;padding:12px 14px;border-radius:8px;color:#8fb0b8;line-height:1.9">
-          clave del QR (32B)<br>+ IV del JWE (12B)<br>+ ciphertext<br>&#x2193;<br><span style="color:var(--teal)">JWS descifrado</span> + auth tag verify<br>
-          <span style="color:var(--cyan);font-size:11px">clearKey() se llama siempre, incluso si falla</span>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card" style="height:100%;background:#f0f7f4">
-        <h3>&#191;Por que el IV de 12 bytes aleatorios?</h3>
-        <p style="margin-top:8px">Sin IV distinto por mensaje, cifrar el mismo bundle dos veces producir&#237;a el mismo ciphertext. Un observador podr&#237;a detectar que el contenido se repite. Con IV aleatorio, el mismo plaintext produce output completamente distinto cada vez.</p>
-        <div style="margin-top:12px;font-family:var(--mono);font-size:13px;background:#eef6f5;padding:12px 14px;border-radius:8px;color:var(--teal);line-height:1.9">
-          bundle A + IV<sub>1</sub> &#x2192; <span style="color:var(--ink2)">ciphertext<sub>1</sub></span><br>
-          bundle A + IV<sub>2</sub> &#x2192; <span style="color:var(--ink2)">ciphertext<sub>2</sub></span><br>
-          <span style="font-size:11px;color:var(--muted)">mismo contenido, outputs distintos e indistinguibles</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:14px;background:#0B1B2B;border:none;padding:11px 16px">
-    <p style="color:#c7d8de;font-size:14px">El descifrado exitoso garantiza <b>acceso e integridad</b> del contenido &mdash; pero <b style="color:var(--amber)">no prueba quien lo creo</b>. Cualquiera podria cifrar datos falsos con AES. Eso lo responde el siguiente paso: la firma ES256.</p>
-  </div>
-</section>
-
-<!-- ============ 16 · VERIFIER JWS VERIFY ============ -->
-<section class="slide" id="s9c">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">16</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; ES256 verify</span><span class="bar"></span></div>
-  <h1 class="title">Paso 2: verificar la firma &mdash; confirmar quien lo firmo</h1>
-  <div class="cols" style="gap:28px;margin-top:20px;align-items:stretch">
-    <div class="col">
-      <div class="card" style="height:100%">
-        <h3>La verificacion ES256 paso a paso</h3>
-        <div style="font-family:var(--mono);font-size:12px;margin-top:10px;background:#f6f4eb;padding:12px 14px;border-radius:8px;color:var(--ink);line-height:2">
-          JWS header &#x2192; alg:ES256, zip:DEF, kid<br>
-          JWS payload &#x2192; Base64URL decode &#x2192; bytes &#x2192; DEFLATE decompress &#x2192; JSON<br>
-          JSON.iss &#x2192; descargar <span style="color:var(--teal)">{iss}/.well-known/jwks.json</span><br>
-          jwks[kid] &#x2192; reconstruir punto EC P-256<br>
-          <span style="color:var(--muted);font-size:11px">0x04 &#x2016; x &#x2016; y = 65 bytes, validado sobre la curva</span><br>
-          SHA-256("header.payload") &#x2192; 32 bytes<br>
-          p256.verify(sig 64B, hash 32B, pubkey 65B)<br>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card" style="height:100%;background:#f0f7f4">
-        <h3>&#191;Por que SHA-256 antes de verificar?</h3>
-        <p style="margin-top:8px">ECDSA no opera sobre datos de longitud variable: necesita exactamente 32 bytes. SHA-256 convierte el bundle, de cualquier tamano, en 32 bytes que lo representan de forma univoca.</p>
-        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;background:#eef6f5;padding:10px 12px;border-radius:8px;color:var(--teal);line-height:1.9">
-          bundle (N bytes)<br>&#x2193; SHA-256<br><span style="color:var(--ink2)">32 bytes fijos</span><br>&#x2193; ECDSA P-256<br><span style="color:var(--teal)">firma valida / invalida</span>
-        </div>
-        <p style="margin-top:8px;font-size:13px">Un solo bit cambiado en el bundle cambia aprox. la mitad de los bits del hash.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 17 · DOS TRY/CATCH + ESTADOS ============ -->
-<section class="slide" id="s9d">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">17</span><span class="seg">&#xB7;26</span> <span>Verifier &middot; independencia y estados</span><span class="bar"></span></div>
-  <h1 class="title">Descifrar y verificar son operaciones independientes</h1>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">15</span><span class="seg">·26</span> <span>Verifier · SMART Health Link</span><span class="bar"></span></div>
+  <h1 class="title">El QR contiene un SMART Health Link</h1>
   <div class="cols" style="gap:28px;margin-top:16px;align-items:stretch">
     <div class="col">
-      <div class="card" style="background:#0B1B2B;border:none;height:100%">
-        <h3 style="color:#fff">Dos try/catch separados</h3>
-        <p style="color:#c7d8de;margin-top:8px">Si la extraccion del bundle FHIR falla, el error del descifrado no contamina la verificacion de firma, y viceversa. Los datos se muestran aunque la firma falle &mdash; el criterio clinico es del profesional.</p>
-        <div style="margin-top:12px;font-family:var(--mono);font-size:12px;color:#8fb0b8;line-height:2">
-          try { descifrar + extraer FHIR }<br>
-          catch (e) { estado = 'error' }<br><br>
-          try { verificar firma ES256 }<br>
-          catch (e) {<br>
-          &nbsp;&nbsp;if (isJwksNetworkError) &#x2192; <span style="color:var(--amber)">success_unverified</span><br>
-          &nbsp;&nbsp;else &#x2192; <span style="color:var(--danger)">success_signature_invalid</span><br>
+      <div class="card" style="height:100%">
+        <div class="card-label" style="color:var(--cyan);margin-bottom:10px">QR escaneado</div>
+        <div style="font-family:var(--mono);font-size:13px;background:#0d1f2d;padding:10px 12px;border-radius:8px;color:#c7d8de;word-break:break-all;line-height:1.7">
+          <span style="color:var(--cyan)">shlink:/</span>eyJ1cmwiOiJodHRwczovLy4uLiIsImtleSI6Ii4uLiIsImZsYWciOiJQIn0
+        </div>
+        <div style="margin:10px 0 8px;font-family:var(--mono);font-size:13px;color:var(--muted);text-align:center">↓ Base64URL decode</div>
+        <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:10px 12px;border-radius:8px;color:var(--ink);line-height:2">
+          {<br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"url"</span>: <span style="color:var(--green)">"https://issuer/.../shl/abc"</span>,<br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"key"</span>: <span style="color:var(--amber)">"32 bytes AES-256 · Base64URL"</span>,<br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"flag"</span>: <span style="color:var(--danger)">"P"</span><br>
           }
         </div>
-        <p style="margin-top:10px;color:var(--cyan);font-size:13px">"No pude verificar" &#x2260; "verifique y es falso"</p>
+        <div style="margin-top:10px;font-size:13px;color:var(--muted)"><b>key</b> → <span class="k">shlStore</span> consume-once · <span class="k">consumePendingShl()</span></div>
       </div>
     </div>
     <div class="col">
-      <div class="card" style="height:100%">
-        <h3>Los cuatro estados de resultado</h3>
-        <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:13px">
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#e8f5ef;border-radius:6px">
-            <span class="pill ok" style="white-space:nowrap">success</span>
-            <span>descifrado OK &middot; firma ES256 valida contra el JWKS</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef9ec;border-radius:6px">
-            <span class="pill wa" style="white-space:nowrap;font-size:10px">success_unverified</span>
-            <span>descifrado OK &middot; no se pudo descargar el JWKS (sin red)</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef2f2;border-radius:6px">
-            <span class="pill da" style="white-space:nowrap;font-size:10px">sig_invalid</span>
-            <span>descifrado OK &middot; p256.verify() devolvio false. No es temporal.</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fef2f2;border-radius:6px">
-            <span class="pill da" style="white-space:nowrap">error</span>
-            <span>auth tag fallo &middot; 404 (exp/bloq/inexist) &middot; QR invalido &middot; sin red</span>
+      <div class="cardgrid" style="height:100%;grid-template-rows:1fr 1fr;gap:14px">
+        <div class="card">
+          <h3 style="font-size:19px;margin-bottom:10px">&#128273; key — clave AES-256</h3>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.6">32 bytes en Base64URL · descifra el JWE en S3.</div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:19px;margin-bottom:10px">&#128681; flag — comportamiento del link</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;gap:10px;align-items:center">
+              <span class="pill da" style="min-width:24px;text-align:center">P</span>
+              <span style="font-size:14px">passcode requerido para acceder</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span class="pill wa" style="min-width:24px;text-align:center">L</span>
+              <span style="font-size:14px">long-term · accesible múltiples veces</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span class="pill in" style="min-width:24px;text-align:center">U</span>
+              <span style="font-size:14px">single-use · se invalida al primer acceso</span>
+            </div>
           </div>
         </div>
       </div>
@@ -660,19 +587,196 @@ svg.diagram{width:100%;height:100%;display:block}
   </div>
 </section>
 
-<!-- ============ 10 · DOBLE CAPA + ESTADOS ============ -->
+<!-- ============ VERIFIER · MANIFIESTO ============ -->
+<section class="slide" id="s9c">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">16</span><span class="seg">·26</span> <span>Verifier · manifiesto</span><span class="bar"></span></div>
+  <h1 class="title">Del SHL al manifiesto</h1>
+  <div class="cols" style="gap:28px;margin-top:16px;align-items:stretch">
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card-label" style="color:var(--teal);margin-bottom:10px">POST → url del SHL</div>
+        <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:10px 12px;border-radius:8px;color:var(--ink);line-height:2">
+          {<br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"recipient"</span>: <span style="color:var(--green)">"Nexo Verifier"</span><br>
+          }<br>
+          <span style="color:var(--muted);font-size:12px">// si flag P, agregar:</span><br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"passcode"</span>: <span style="color:var(--danger)">"123456"</span>
+        </div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px;font-size:14px;color:var(--ink2)">
+          <div>→ Issuer valida sesión</div>
+          <div>→ Devuelve URLs prefirmadas S3 <span class="k">≤ 1h</span></div>
+          <div>→ Verifier descarga <b>directo de S3</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card-label" style="color:var(--teal);margin-bottom:10px">Respuesta: manifiesto</div>
+        <div style="font-family:var(--mono);font-size:12px;background:#0d1f2d;padding:10px 12px;border-radius:8px;color:#c7d8de;line-height:1.9">
+          {<br>
+          &nbsp;&nbsp;<span style="color:var(--teal)">"files"</span>: [{<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">"contentType"</span>: <span style="color:#90d4b4">"application/smart-health-card"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">"location"</span>: <span style="color:var(--amber)">"https://s3.amazonaws.com/…?X-Amz-Signature=…"</span><br>
+          &nbsp;&nbsp;}]<br>
+          }
+        </div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px;font-size:14px;color:var(--ink2)">
+          <div>Una entrada por tipo de recurso clínico</div>
+          <div><b>Vacunas</b> · <b>Laboratorio</b></div>
+          <div style="color:var(--muted);font-size:13px">Cada location → descarga un JWE desde S3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VERIFIER · DESCIFRAR ============ -->
+<section class="slide" id="s9d">
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">17</span><span class="seg">·26</span> <span>Verifier · descifrar</span><span class="bar"></span></div>
+  <h1 class="title">JWE de S3 &mdash; descifrar &mdash; JWS</h1>
+
+  <!-- JWE: lo que baja de S3 -->
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;margin-top:14px;margin-bottom:7px">LO QUE BAJAMOS DE S3 &mdash; JWE &nbsp;(5 partes separadas por punto)</div>
+  <div style="display:flex;gap:5px;align-items:stretch">
+    <div style="flex:1.1;background:#fff8ec;border:1.5px solid var(--amber);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--amber);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">HEADER</div>
+      <div style="color:var(--ink2)">alg:dir</div>
+      <div style="color:var(--ink2)">enc:A256GCM</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:.8;background:#f4f6f8;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--muted);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">CLAVE</div>
+      <div style="color:var(--muted)">&empty;</div>
+      <div style="color:var(--muted);font-size:10px">key viene del QR</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:.8;background:#e7f4f6;border:1.5px solid var(--cyan);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--cyan);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">IV</div>
+      <div style="color:var(--ink2)">12 bytes</div>
+      <div style="color:var(--ink2)">aleatorios</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:1.6;background:#e6f1f1;border:2px solid var(--teal);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--teal);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">CIPHERTEXT</div>
+      <div style="color:var(--teal);font-weight:600">el JWS cifrado</div>
+      <div style="color:var(--muted);font-size:10px">AES-256-GCM</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:.9;background:#eaf7ef;border:1.5px solid var(--green);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--green);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">AUTH TAG</div>
+      <div style="color:var(--ink2)">128 bits</div>
+      <div style="color:var(--ink2)">integridad</div>
+    </div>
+  </div>
+
+  <!-- Arrow + key -->
+  <div style="display:flex;align-items:center;gap:14px;margin:12px 0">
+    <div style="flex:1;height:1px;background:var(--line)"></div>
+    <div style="background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:8px 18px;font-family:var(--mono);font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:10px;white-space:nowrap">
+      <span style="color:var(--amber);font-weight:600">key del QR (32B)</span>
+      <span style="color:var(--muted)">+</span>
+      <span>AES-256-GCM decrypt</span>
+      <span style="color:var(--muted)">+</span>
+      <span style="color:var(--green)">auth tag verify</span>
+    </div>
+    <div style="flex:1;height:1px;background:var(--line)"></div>
+  </div>
+
+  <!-- JWS: resultado -->
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;margin-bottom:7px">RESULTADO &mdash; JWS (SMART HEALTH CARD) &nbsp;(3 partes)</div>
+  <div style="display:flex;gap:5px;align-items:stretch">
+    <div style="flex:1;background:#fff8ec;border:1.5px solid var(--amber);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--amber);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">HEADER</div>
+      <div style="color:var(--ink2)">alg:ES256</div>
+      <div style="color:var(--ink2)">zip:DEF &middot; kid</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:2;background:#e6f1f1;border:1.5px solid var(--teal);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--teal);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">PAYLOAD</div>
+      <div style="color:var(--ink2)">bundle FHIR firmado</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 1px">&middot;</div>
+    <div style="flex:1;background:#f4f7f9;border:1.5px solid var(--ink2);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--ink2);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:5px">FIRMA</div>
+      <div style="color:var(--ink2)">ES256</div>
+      <div style="color:var(--ink2)">64 bytes (r&parallel;s)</div>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;font-size:13px;color:var(--muted)">auth tag falla &rarr; <span style="color:var(--danger);font-family:var(--mono);font-size:12px">decipher.finish() false</span></div>
+
+</section>
+
+<!-- ============ VERIFIER · VERIFICAR Y MOSTRAR ============ -->
 <section class="slide" id="s10">
-  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">18</span><span class="seg">·26</span> <span>Verifier · confianza</span><span class="bar"></span></div>
-  <h1 class="title">Cuatro estados, cada uno con un significado clínico distinto</h1>
-  <table class="t" style="margin-top:14px">
-    <tr><th style="width:26%">Estado</th><th style="width:32%">Qué pasó</th><th>Implicación clínica</th></tr>
-    <tr><td><span class="pill ok">success</span></td><td>Descifrado OK · firma ES256 válida contra el JWKS del emisor</td><td>El contenido es auténtico e íntegro. La institución firmante lo avala.</td></tr>
-    <tr><td><span class="pill wa">success_unverified</span></td><td>Descifrado OK · no se pudo descargar el JWKS (sin red)</td><td>"No pude verificar" — no sé si es inválida, solo que no pude confirmarla. Distinto de saber que es falsa.</td></tr>
-    <tr><td><span class="pill da">success_signature_invalid</span></td><td>Descifrado OK · <span class="k">p256.verify()</span> devolvió <span class="k">false</span></td><td>La matemática confirmó que la firma no corresponde al contenido. Posible alteración. No es un fallo temporal.</td></tr>
-    <tr><td><span class="pill da">error</span></td><td>QR inválido · auth tag falló · 404 (expirado/bloqueado/inexistente) · sin red</td><td>No hay datos que mostrar. Si es descifrado: clave incorrecta o datos alterados en tránsito.</td></tr>
-  </table>
-  <div class="card" style="margin-top:14px;padding:11px 16px">
-    <p style="font-size:14px;line-height:1.6">En los tres estados <b>success</b> los datos FHIR se muestran siempre — el criterio clínico lo toma el profesional. El verifier informa el estado criptográfico con claridad: <b>escudo verde</b> · <b>triángulo amarillo</b> · <b>escudo rojo</b>.</p>
+  <div class="eyebrow"><span class="seg">shlink:/</span> <span class="num">18</span><span class="seg">·26</span> <span>Verifier · verificar y mostrar</span><span class="bar"></span></div>
+  <h1 class="title">Verificar la firma ES256 del JWS</h1>
+
+  <!-- JWS entrada -->
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;margin-top:12px;margin-bottom:6px">ENTRADA &mdash; JWS obtenido del descifrado</div>
+  <div style="display:flex;gap:5px;align-items:stretch">
+    <div style="flex:1;background:#fff8ec;border:1.5px solid var(--amber);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--amber);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:4px">HEADER</div>
+      <div style="color:var(--ink2)">alg:ES256 &middot; zip:DEF &middot; kid</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 2px">&middot;</div>
+    <div style="flex:2;background:#e6f1f1;border:1.5px solid var(--teal);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--teal);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:4px">PAYLOAD</div>
+      <div style="color:var(--ink2)">bundle FHIR &rarr; DEFLATE &rarr; Base64URL</div>
+    </div>
+    <div style="display:flex;align-items:center;color:var(--muted);font-size:18px;font-weight:700;padding:0 2px">&middot;</div>
+    <div style="flex:1;background:#f4f7f9;border:1.5px solid var(--ink2);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:12px">
+      <div style="color:var(--ink2);font-weight:600;font-size:10px;letter-spacing:.06em;margin-bottom:4px">FIRMA</div>
+      <div style="color:var(--ink2)">64 bytes (r&parallel;s)</div>
+    </div>
+  </div>
+
+  <!-- 4 pasos -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+    <div class="card" style="padding:12px 16px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:6px">&#x2460; HEADER &rarr; Base64URL decode</div>
+      <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:6px 10px;border-radius:6px;color:var(--ink)">
+        kid: <span style="color:var(--amber)">"nexo-1"</span> &nbsp;&middot;&nbsp; alg: <span style="color:var(--amber)">"ES256"</span>
+      </div>
+    </div>
+    <div class="card" style="padding:12px 16px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:6px">&#x2461; PAYLOAD &rarr; decode &rarr; DEFLATE decompress &rarr; JSON</div>
+      <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:6px 10px;border-radius:6px;color:var(--ink)">
+        iss: <span style="color:var(--teal)">"https://issuer.nexo.com"</span>
+      </div>
+    </div>
+    <div class="card" style="padding:12px 16px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:6px">&#x2462; GET {iss}/.well-known/jwks.json &rarr; buscar kid</div>
+      <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:6px 10px;border-radius:6px;color:var(--ink)">
+        clave p&uacute;blica P-256 &nbsp;<span style="color:var(--muted)">(0x04&parallel;x&parallel;y = 65B)</span>
+      </div>
+    </div>
+    <div class="card" style="padding:12px 16px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:6px">&#x2463; SHA-256("header.payload") &rarr; 32B</div>
+      <div style="font-family:var(--mono);font-size:13px;background:#f6f4eb;padding:6px 10px;border-radius:6px;color:var(--ink)">
+        p256.verify(firma 64B, hash 32B, pubkey 65B) &rarr; <span style="color:var(--green);font-weight:600">true</span> / <span style="color:var(--danger);font-weight:600">false</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 estados -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px">
+    <div style="background:#e8f5ef;border-radius:8px;padding:9px 12px">
+      <span class="pill ok" style="margin-bottom:5px;display:inline-block">success</span>
+      <div style="font-size:12px;color:var(--ink2)">descifrado OK &middot; firma v&aacute;lida</div>
+    </div>
+    <div style="background:#fef9ec;border-radius:8px;padding:9px 12px">
+      <span class="pill wa" style="margin-bottom:5px;display:inline-block;font-size:10px">unverified</span>
+      <div style="font-size:12px;color:var(--ink2)">OK &middot; sin red para bajar JWKS</div>
+    </div>
+    <div style="background:#fef2f2;border-radius:8px;padding:9px 12px">
+      <span class="pill da" style="margin-bottom:5px;display:inline-block;font-size:10px">sig_invalid</span>
+      <div style="font-size:12px;color:var(--ink2)">OK &middot; p256.verify &rarr; false</div>
+    </div>
+    <div style="background:#fef2f2;border-radius:8px;padding:9px 12px">
+      <span class="pill da" style="margin-bottom:5px;display:inline-block">error</span>
+      <div style="font-size:12px;color:var(--ink2)">auth tag fall&oacute; &middot; 404 &middot; QR inv&aacute;lido</div>
+    </div>
   </div>
 </section>
 
@@ -815,7 +919,7 @@ svg.diagram{width:100%;height:100%;display:block}
 <script>
 /* ---------------- data ---------------- */
 const TOTAL=26;
-const titles=["Carátula","Agenda","Problema y contexto","Objetivo y alcance","Fundamentos","Metodología","Arquitectura general","Nēxo Issuer","Issuer · ¿por qué firmar?","Issuer · JWS estructura","Issuer · ¿por qué cifrar?","Issuer · JWE estructura","Issuer · el QR","Issuer · seguridad","Nēxo Verifier","Verifier · JWE decrypt","Verifier · ES256 verify","Verifier · independencia y estados","Verifier · confianza","Capa de IA · BFF+MCP","IA · control y límites","Validación","Demo en vivo","Riesgos y lecciones","Conclusiones y futuro","Cierre · Preguntas"];
+const titles=["Carátula","Agenda","Problema y contexto","Objetivo y alcance","Fundamentos","Metodología","Arquitectura general","Nēxo Issuer","Issuer · ¿por qué firmar?","Issuer · JWS estructura","Issuer · ¿por qué cifrar?","Issuer · JWE estructura","Issuer · el QR","Issuer · seguridad","Nēxo Verifier","Verifier · SMART Health Link","Verifier · manifiesto","Verifier · descifrar","Verifier · verificar y mostrar","Capa de IA · BFF+MCP","IA · control y límites","Validación","Demo en vivo","Riesgos y lecciones","Conclusiones y futuro","Cierre · Preguntas"];
 const durs=["1:00","0:30","2:30","2:00","2:30","2:00","3:00","3:00","1:30","1:30","1:30","1:30","1:00","2:00","3:00","2:00","2:00","1:30","2:00","2:30","2:00","2:00","9:00","3:00","2:30","0:30"];
 const notes=[
 /*0*/`<b>Apertura (≈1 min).</b> Buenos días/tardes. Presentamos <b>Nēxo</b>, nuestro Trabajo Profesional de Ingeniería en Informática. Es un <b>ecosistema de credenciales sanitarias digitales interoperables</b> basado en tres estándares abiertos —<em>HL7 FHIR, SMART Health Cards y SMART Health Links</em>— con una capa opcional de IA. Somos el equipo 163, dirigidos por el Lic. Gustavo Carolo, del Hospital Garrahan. La presentación dura unos 30 minutos e incluye una demo en vivo; al final abrimos a preguntas.`,
@@ -832,11 +936,11 @@ const notes=[
 /*11*/`<b>(≈21:30). JWE estructura &mdash; issuer.</b> JWE tiene cinco partes en Base64URL separadas por punto. (1) <em>Header</em>: alg:dir (la clave AES viene directo del QR, sin intercambio de clave — por eso la segunda parte esta vacia), enc:A256GCM. (2) Clave cifrada: vacia porque en modo dir no hay intercambio. (3) <em>IV de 12 bytes aleatorios</em>: fundamental para que el mismo bundle produzca ciphertext diferente cada vez — sin IV distinto, un observador detectaria que el contenido se repite. (4) <em>Ciphertext</em>: el JWS cifrado con AES-256-GCM. (5) <em>Auth tag de 128 bits</em>: cubre ciphertext + header + IV. Un solo byte alterado en S3 hace que el descifrado falle. No es solo confidencialidad: es integridad garantizada.`,
 /*12*/`<b>(≢21:00). El QR resultado.</b> El QR es simplemente <em>shlink:/</em> seguido de un Base64URL que decodifica a <em>{ url, key, flag }</em>. La url es el endpoint del issuer. La key son los 32 bytes de la clave AES-256 en Base64URL — esta es la clave que descifra el JWE. El flag "P" indica que el endpoint requiere passcode. Esos tres campos son todo lo que el verifier necesita para arrancar.`,
 /*13*/`<b>(≈2 min). Control de acceso.</b> Esta slide cubre la seguridad que NO es criptografía de firma o cifrado — es el control de quién puede acceder al manifiesto. <b>Passcode:</b> generado con <em>crypto.randomInt(100000, 1000000)</em>, no <em>Math.random()</em> que no es criptográficamente seguro. El número en texto plano NUNCA se guarda: bcrypt 12 rounds, solo el hash entra a la DB. <b>Anti-brute-force:</b> <em>SELECT FOR UPDATE</em> hace atómica la validación — si dos requests llegan simultáneamente con el mismo passcode, solo uno puede validar. Passcode incorrecto → <em>401</em> con <em>remainingAttempts</em>. Al agotar los 5 intentos (default configurable) la sesión se desactiva y responde <em>404</em> idéntico al de un SHL expirado o inexistente — sin side-channel, un atacante no sabe qué pasó. <b>Circuit breaker:</b> si el 50% de los requests a HAPI FHIR falla en una ventana de ≥ 3 requests, el circuit breaker se abre y resetea a los 30 s. Protege contra cascada. <b>Multiportal:</b> el header <em>x-api-key</em> routea al FHIR correcto, sin instancias separadas por institución.`,
-/*14*/`<b>(≈3 min). Diagrama del Verifier.</b> Arrancá mencionando que el verifier recibe el QR y tiene que hacer lo inverso de lo que hizo el issuer: descifrar + verificar. Pero con sus propias decisiones de diseño. <b>Card 1 — shlStore:</b> el payload <em>shlink:/eyJ...</em> se decodifica (Base64URL → JSON) → <em>{ url, key, flag }</em>. La clave AES NO puede ser un nav param de Expo Router: los params se serializan en el historial de navegación y pueden aparecer en crash reporters. Va a shlStore, variable en memoria, consume-once: <em>consumePendingShl()</em> lee y borra en un solo paso. Si se llama dos veces, la segunda devuelve null. <b>Card 2 — Manifiesto:</b> el manifiesto no existe hasta que el verifier lo pide. POST → issuer valida → genera URLs prefirmadas de S3 (vida ≤ 1h) → verifier descarga JWEs directo de S3. Cada JWE descifrado da <em>{ verifiableCredential: [JWS, ...] }</em>: un JWS es una SMART Health Card. Puede haber uno por tipo de recurso clínico. <b>Card 3 — La distinción clave:</b> descifrar con AES-GCM da acceso e integridad, pero no prueba el origen — cualquiera podría fabricar un JWE. La firma ES256 dentro del JWS es lo que responde eso. Son dos operaciones independientes.`,
-/*15*/`<b>(≢2:00). JWE decrypt — paso 1.</b> La clave del QR (32 bytes AES-256) + el IV de 12 bytes del JWE descifran el ciphertext. El auth tag de 128 bits verifica que nada fue alterado — se calcula sobre clave + IV + ciphertext + header al cifrar. Si alguien modifico un solo byte en S3, en transito, donde sea, decipher.finish() devuelve false. clearKey() se llama SIEMPRE, incluso si falla, para no dejar la clave en memoria. El IV aleatorio es fundamental: sin un IV distinto por mensaje, cifrar el mismo bundle dos veces produciria el mismo ciphertext y un observador detectaria que el contenido se repite.`,
-/*16*/`<b>(≢2:00). ES256 verify — paso 2.</b> El JWS tiene header con alg:ES256, zip:DEF, kid. El payload en Base64URL se decodifica en bytes, luego DEFLATE decompress, luego JSON con el bundle FHIR y el campo iss. El JWKS se descarga de {iss}/.well-known/jwks.json. Se reconstruye el punto EC P-256: 0x04 concatenado x concatenado y = 65 bytes, validado sobre la curva. Luego SHA-256("header.payload") produce 32 bytes fijos. Finalmente p256.verify(sig 64B, hash 32B, pubkey 65B). SHA-256 es necesario porque ECDSA no opera sobre datos de longitud variable — necesita exactamente 32 bytes. Un solo bit cambiado en el bundle cambia aprox. la mitad de los bits del hash.`,
-/*17*/`<b>(≢1:30). Independencia y estados.</b> Extraer el bundle FHIR y verificar la firma son dos try/catch independientes. Si la firma falla, los datos se muestran de todas formas — el criterio clinico es del profesional. Los cuatro estados: success (descifrado OK + firma valida), success_unverified (descifrado OK + JWKS inaccesible por red — "no pude verificar" no es lo mismo que "verifique y es falso"), success_signature_invalid (descifrado OK + p256.verify devolvio false — no es temporal, la firma no corresponde al contenido), error (auth tag fallo / 404 expirado-bloqueado-inexistente / QR invalido / sin red). En los tres estados success los datos FHIR se muestran siempre.`,
-/*18*/`<b>(≈2 min). Los cuatro estados.</b> Usá esta slide para anclar la diferencia entre los tres "success" — todos muestran datos FHIR, pero con distintos niveles de confianza. <b>success:</b> todo fue bien — descifrado correcto y firma matemáticamente válida. El issuer es quien dice ser. <b>success_unverified:</b> no sé si la firma es válida porque no pude bajar el JWKS — problema de red. Distinto a saber que es falsa. <b>success_signature_invalid:</b> me conecté, obtuve la clave pública, hice la matemática — y p256.verify devolvió false. No es temporal. La credencial fue alterada o la firma no corresponde. <b>error:</b> no hay datos que mostrar: auth tag falló (datos alterados o clave incorrecta), 404 (expiró / agotó intentos / no existe — indistinguible por diseño), QR malformado o red caída. <b>La regla general:</b> en los tres estados "success" los datos se muestran. El criterio clínico lo toma el profesional, informado por el estado criptográfico. Icono verde · amarillo · rojo.`,
+/*14*/`<b>(\u22483 min). Diagrama del Verifier.</b> El diagrama muestra el flujo completo: escanear QR → resolver SHL → obtener manifiesto → descifrar → verificar → render FHIR. Destacar las dos capas: <b>capa 1</b> (acceso + integridad, AES-256-GCM) y <b>capa 2</b> (confianza en el origen, ES256). El verifier es autónomo: descifra localmente, verifica contra el JWKS público del issuer, nunca depende de un intermediario. Los chips resumen la filosofía: el dato nunca sale descifrado del dispositivo.`,
+/*15*/`<b>(≈2 min). SMART Health Link.</b> El QR es <em>shlink:/</em> seguido de un Base64URL que decodifica a <em>{ url, key, flag }</em>. La <b>url</b> es el endpoint del issuer. La <b>key</b> son los 32 bytes AES-256 en Base64URL: descifra los JWE. El <b>flag</b> P indica que se requiere passcode. La clave NO puede viajar como nav param de Expo Router porque se serializa en el historial de navegación y puede aparecer en crash reporters. Va a shlStore: consume-once en memoria. <em>consumePendingShl()</em> la lee y borra en un solo paso — si se llama dos veces, la segunda devuelve null. <b>Flags:</b> P = passcode required, L = long-term (múltiples accesos), U = single-use (se invalida al primer acceso).`,
+/*16*/`<b>(≈2 min). Manifiesto.</b> El verifier hace POST a la url del SHL con <em>{ recipient, [passcode si flag=P] }</em>. El issuer valida la sesión, genera URLs prefirmadas de S3 con vida máxima de 1h y responde el manifiesto. El verifier descarga los JWE <b>directo de S3</b> — el issuer no es intermediario del dato cifrado. Una entrada por tipo de recurso clínico: vacunas y laboratorio. Cada location apunta a un JWE cifrado con la clave del QR. El passcode se valida con <em>SELECT FOR UPDATE</em> (atómico). 5 intentos fallidos → sesión desactivada → responde 404 idéntico al de un SHL expirado: sin side-channel.`,
+/*17*/`<b>(≈2 min). Descifrado JWE.</b> La clave del QR (32 bytes AES-256) + el IV de 12 bytes del JWE descifran el ciphertext con AES-256-GCM. El auth tag de 128 bits verifica integridad: se calcula sobre clave + IV + ciphertext + header. Un solo byte alterado en S3, en tránsito, o en cualquier punto: <em>decipher.finish()</em> devuelve false. <em>clearKey()</em> se llama SIEMPRE, incluso si falla, para no dejar la clave en memoria. El resultado es <em>{ verifiableCredential: [JWS_vacunas, JWS_laboratorio] }</em>. Cada JWS es una SMART Health Card. El descifrado exitoso garantiza acceso e integridad — pero no prueba el origen. Eso lo responde el siguiente paso: la firma ES256.`,
+/*18*/`<b>(≈2 min). Verificar y mostrar.</b> La verificación ES256: extrae kid del header, descarga el JWKS de <em>{iss}/.well-known/jwks.json</em>, reconstruye el punto EC P-256 (0x04‖x‖y = 65 bytes), aplica SHA-256("header.payload") → 32 bytes fijos, llama a p256.verify(sig 64B, hash 32B, pubkey 65B). Se ejecuta en try/catch <b>independiente</b> del descifrado — si la firma falla, los datos FHIR se muestran de todas formas. <b>Cuatro estados:</b> success (todo OK), success_unverified (sin red para bajar el JWKS — "no pude verificar" ≠ "verifique y es falso"), success_signature_invalid (p256.verify() devolvió false — no es temporal), error (auth tag falló / 404 / QR inválido / sin red). En los 3 estados success los datos FHIR se muestran siempre. Criterio clínico: del profesional. Icono verde · amarillo · rojo.`,
 /*19*/`<b>(≈3 min). Diagrama de la IA.</b> Dos componentes. <b>nexo-mcp</b>: servidor Python con FastMCP que expone <b>7 herramientas</b> —OpenFDA (reacciones adversas FDA), RxNorm/RxTerms (NLM), traducir_codigo_loinc (NLM ClinicalTables), consultar_loinc_fhir (HL7 tx.fhir.org con propiedades clínicas completas), ICD-10, buscar_medicamento, buscar_vacuna_cvx—; corre como <b>subproceso por stdio</b>, sin puerto HTTP, sin superficie de red expuesta. <b>nexo-bff-ai</b>: Express/TS con Vercel AI SDK, el único que habla con el LLM — centraliza autenticación y secretos. Soporta <b>cuatro providers</b>: Groq/llama-3.3-70b (default), GPT-4o, Claude-3.5-sonnet, Gemini. El móvil nunca toca el LLM. Detalle técnico: se usan <b>dos modelos distintos por fase</b>. En <b>Fase 1</b> (enrutamiento/tool-calling), un modelo más liviano (llama-3.3-70b, gpt-4o-mini, claude-haiku, gemini-flash) recibe el recurso FHIR con sus códigos y la lista de tools y decide cuáles invocar y con qué argumentos — el BFF ejecuta esas llamadas contra el MCP. En <b>Fase 2</b> (redacción clínica), un modelo más capaz recibe el FHIR <b>sin identificadores del paciente</b> y los resultados verificados de las APIs y redacta exactamente <b>dos párrafos en español</b>. El system prompt le prohíbe usar conocimiento propio fuera de las fuentes.`,
 /*20*/`<b>(≈2 min).</b> Para que la IA sea confiable y trazable. <b>Grounding Judge</b> (LLM-as-a-Judge): evalúa de forma <b>asíncrona</b> si cada párrafo del análisis está respaldado por las fuentes retornadas por el MCP — score binario (1/0), sin sumar latencia al usuario. <b>Langfuse</b>: trazas jerárquicas con spans por fase (enrutamiento → tool calls → redacción → judge), scores del juez y feedback humano; el campo <em>subject</em> del recurso FHIR se remueve antes de registrar para no exponer al paciente. <b>Feedback de usuario</b>: el endpoint <em>POST /api/score</em> recibe score (1 = 👍, 0 = 👎) y lo envía a Langfuse — permite identificar patrones de respuestas insatisfactorias sin reentrenamiento. Refinamos iterativamente con datos reales: alucinaciones, menciones no pedidas de ausencia de datos, falsos negativos del juez y análisis penalizados por mezcla de idiomas fueron identificados y corregidos en el system prompt. El límite es explícito: la IA <b>no valida criptográficamente, no decide validez y no reemplaza el criterio profesional</b>; solo complementa la interpretación, siempre después de la verificación criptográfica.`,
 /*21*/`<b>(≈2 min).</b> Validamos en tres niveles. <b>Unitarias</b> con Jest sobre el Issuer —generación de SHC/SHL y transformación FHIR— integradas a CI con GitHub Actions. <b>Independiente</b>: las SHC se validaron con herramientas de referencia de <em>SMART Health IT</em>, y el Verifier se probó con QR generados por terceros, demostrando <b>interoperabilidad real</b>, no solo con nuestro propio emisor. <b>End-to-end</b>: flujo completo con <b>Synthea + HAPI FHIR</b> y un portal simulado, incluyendo casos límite —bloqueo por passcode, revocación idempotente y detección de firmas alteradas—. La prueba con usuarios reales del <b>Garrahan</b> no se concretó por madurez del entorno y queda como futuro; por eso trabajamos con datos sintéticos.`,
